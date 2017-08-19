@@ -1,4 +1,5 @@
-ShadowsocksR for Windows
+Base on SSR
+
 =======================
 
 [![Build Status]][Appveyor]

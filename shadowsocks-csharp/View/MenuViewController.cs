@@ -51,6 +51,7 @@ namespace Shadowsocks.View
         private MenuItem UpdateItem;
         private ConfigForm configForm;
         private SettingsForm settingsForm;
+        private UserLoginForm userLoginForm;
         private ServerLogForm serverLogForm;
         private PortSettingsForm portMapForm;
         private SubscribeForm subScribeForm;
@@ -746,16 +747,15 @@ namespace Shadowsocks.View
                 portMapForm.FormClosed += portMapForm_FormClosed;
             }
         }
-
-        private void ShowServerLogForm()
+        private void ShowUserLoginForm()
         {
-            if (serverLogForm != null)
+            if (userLoginForm != null)
             {
-                serverLogForm.Activate();
-                serverLogForm.Update();
-                if (serverLogForm.WindowState == FormWindowState.Minimized)
+                userLoginForm.Activate();
+                userLoginForm.Update();
+                if (userLoginForm.WindowState == FormWindowState.Minimized)
                 {
-                    serverLogForm.WindowState = FormWindowState.Normal;
+                    userLoginForm.WindowState = FormWindowState.Normal;
                 }
             }
             else
@@ -765,6 +765,26 @@ namespace Shadowsocks.View
                 serverLogForm.Activate();
                 serverLogForm.BringToFront();
                 serverLogForm.FormClosed += serverLogForm_FormClosed;
+            }
+        }
+        private void ShowServerLogForm()
+        {
+            if (userLoginForm != null)
+            {
+                userLoginForm.Activate();
+                userLoginForm.Update();
+                if (userLoginForm.WindowState == FormWindowState.Minimized)
+                {
+                    userLoginForm.WindowState = FormWindowState.Normal;
+                }
+            }
+            else
+            {
+                userLoginForm = new UserLoginForm();
+                userLoginForm.Show();
+                userLoginForm.Activate();
+                userLoginForm.BringToFront();
+                userLoginForm.FormClosed += serverLogForm_FormClosed;
             }
         }
 
