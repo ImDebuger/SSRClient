@@ -180,6 +180,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="View\UserLoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\UserLoginForm.designer.cs">
+      <DependentUpon>UserLoginForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Util\Base64.cs" />
     <Compile Include="Util\CRC.cs" />
     <Compile Include="Util\Util.cs" />
