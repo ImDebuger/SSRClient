@@ -286,6 +286,9 @@
     <EmbeddedResource Include="View\SubscribeForm.resx">
       <DependentUpon>SubscribeForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\UserLoginForm.resx">
+      <DependentUpon>UserLoginForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest">
       <SubType>Designer</SubType>

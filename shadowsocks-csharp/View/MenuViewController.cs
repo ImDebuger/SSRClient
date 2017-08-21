@@ -760,11 +760,11 @@ namespace Shadowsocks.View
             }
             else
             {
-                serverLogForm = new ServerLogForm(controller);
-                serverLogForm.Show();
-                serverLogForm.Activate();
-                serverLogForm.BringToFront();
-                serverLogForm.FormClosed += serverLogForm_FormClosed;
+                userLoginForm = new UserLoginForm();
+                userLoginForm.Show();
+                userLoginForm.Activate();
+                userLoginForm.BringToFront();
+                userLoginForm.FormClosed += userLoginForm_FormClosed;
             }
         }
         private void ShowServerLogForm()
@@ -841,7 +841,11 @@ namespace Shadowsocks.View
             settingsForm = null;
             Util.Utils.ReleaseMemory();
         }
-
+        void userLoginForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            userLoginForm = null;
+            Util.Utils.ReleaseMemory();
+        }
         void serverLogForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             serverLogForm = null;
@@ -959,32 +963,33 @@ namespace Shadowsocks.View
 
         private void notifyIcon1_Click(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                int SCA_key = GetAsyncKeyState(Keys.ShiftKey) < 0 ? 1 : 0;
-                SCA_key |= GetAsyncKeyState(Keys.ControlKey) < 0 ? 2 : 0;
-                SCA_key |= GetAsyncKeyState(Keys.Menu) < 0 ? 4 : 0;
-                if (SCA_key == 2)
-                {
-                    ShowServerLogForm();
-                }
-                else if (SCA_key == 1)
-                {
-                    ShowSettingForm();
-                }
-                else if (SCA_key == 4)
-                {
-                    ShowPortMapForm();
-                }
-                else
-                {
-                    ShowConfigForm(false);
-                }
-            }
-            else if (e.Button == MouseButtons.Middle)
-            {
-                ShowServerLogForm();
-            }
+            ShowUserLoginForm();
+            //if (e.Button == MouseButtons.Left)
+            //{
+            //    int SCA_key = GetAsyncKeyState(Keys.ShiftKey) < 0 ? 1 : 0;
+            //    SCA_key |= GetAsyncKeyState(Keys.ControlKey) < 0 ? 2 : 0;
+            //    SCA_key |= GetAsyncKeyState(Keys.Menu) < 0 ? 4 : 0;
+            //    if (SCA_key == 2)
+            //    {
+            //        ShowServerLogForm();
+            //    }
+            //    else if (SCA_key == 1)
+            //    {
+            //        ShowSettingForm();
+            //    }
+            //    else if (SCA_key == 4)
+            //    {
+            //        ShowPortMapForm();
+            //    }
+            //    else
+            //    {
+            //        ShowConfigForm(false);
+            //    }
+            //}
+            //else if (e.Button == MouseButtons.Middle)
+            //{
+            //    ShowServerLogForm();
+            //}
         }
 
         private void NoModifyItem_Click(object sender, EventArgs e)
