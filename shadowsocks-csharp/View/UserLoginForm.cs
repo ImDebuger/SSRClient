@@ -9,6 +9,8 @@ using System.Text;
 using System.Windows.Forms;
 using SimpleJson;
 
+
+
 namespace Shadowsocks.View
 {
     public partial class UserLoginForm : Form

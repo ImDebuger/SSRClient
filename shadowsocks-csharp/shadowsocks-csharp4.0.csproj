@@ -298,6 +298,8 @@
     <None Include="Resources\ss16.png" />
     <None Include="Resources\ss24.png" />
     <None Include="Resources\ssw128.png" />
+    <Content Include="3rd\CSkin.dll" />
+    <Content Include="3rd\CSkin.XML" />
     <Content Include="Data\cn.txt" />
     <None Include="Data\privoxy_conf.txt" />
     <Content Include="Data\user-rule.txt" />
