@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Windows.Forms;
+using SimpleJson;
 
 namespace Shadowsocks.View
 {
@@ -20,8 +21,8 @@ namespace Shadowsocks.View
         private void button1_Click(object sender, EventArgs e)
         {
             CookieContainer cc = new CookieContainer();
-            cc.Add(new System.Uri("https://ss.91zhiyun.cn/auth/login"), new Cookie("91zhiyunlogin", "xx"));
-            string url = "https://ss.91zhiyun.cn/auth/login";
+            cc.Add(new System.Uri("https://ss.91zhiyun.cn/client/login"), new Cookie("91zhiyunlogin", "xx"));
+            string url = "https://ss.91zhiyun.cn/client/login";
             string data = "email=632339219@qq.com&passwd=lisong648&remember_me=dd";
             //  MessageBox.Show(PostHttp(url, data, "application/x-www-form-urlencoded"));
             //\u6b22\u8fce\u56de\u6765
