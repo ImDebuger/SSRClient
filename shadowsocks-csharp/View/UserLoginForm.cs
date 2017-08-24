@@ -8,6 +8,8 @@ using System.Net;
 using System.Text;
 using System.Windows.Forms;
 using SimpleJson;
+using Shadowsocks.Controller;
+using Shadowsocks.Model;
 
 
 
@@ -15,8 +17,13 @@ namespace Shadowsocks.View
 {
     public partial class UserLoginForm : Form
     {
-        public UserLoginForm()
+        private ShadowsocksController controller;
+        private Configuration _modifiedConfiguration;
+
+        public UserLoginForm(ShadowsocksController m_Controller)
         {
+            controller = m_Controller;
+            _modifiedConfiguration = controller.GetConfiguration();
             InitializeComponent();
         }
 
@@ -30,9 +37,17 @@ namespace Shadowsocks.View
             //\u6b22\u8fce\u56de\u6765
             string con = SendDataByPost(url, data, ref cc);
             MessageBox.Show(con);
-            Console.Write(con);
-        }
+            LoadBackInfo(con);
 
+
+        }
+        private void LoadBackInfo(string postBack) {
+            //  JsonData jsonData2 = JsonMapper.ToObject(postBack);
+          JsonObject d=  (JsonObject)SimpleJson.SimpleJson.DeserializeObject(postBack);
+            Object temp ;
+            d.TryGetValue("ssrlink", out temp);
+            MessageBox.Show((String)temp);
+        }
         /// <summary>
         /// 通过POST方式发送数据
         /// </summary>

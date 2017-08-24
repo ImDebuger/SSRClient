@@ -760,7 +760,7 @@ namespace Shadowsocks.View
             }
             else
             {
-                userLoginForm = new UserLoginForm();
+                userLoginForm = new UserLoginForm(controller);
                 userLoginForm.Show();
                 userLoginForm.Activate();
                 userLoginForm.BringToFront();
@@ -769,22 +769,22 @@ namespace Shadowsocks.View
         }
         private void ShowServerLogForm()
         {
-            if (userLoginForm != null)
+            if (serverLogForm != null)
             {
-                userLoginForm.Activate();
-                userLoginForm.Update();
-                if (userLoginForm.WindowState == FormWindowState.Minimized)
+                serverLogForm.Activate();
+                serverLogForm.Update();
+                if (serverLogForm.WindowState == FormWindowState.Minimized)
                 {
-                    userLoginForm.WindowState = FormWindowState.Normal;
+                    serverLogForm.WindowState = FormWindowState.Normal;
                 }
             }
             else
             {
-                userLoginForm = new UserLoginForm();
-                userLoginForm.Show();
-                userLoginForm.Activate();
-                userLoginForm.BringToFront();
-                userLoginForm.FormClosed += serverLogForm_FormClosed;
+                serverLogForm = new ServerLogForm(controller);
+                serverLogForm.Show();
+                serverLogForm.Activate();
+                serverLogForm.BringToFront();
+                serverLogForm.FormClosed += serverLogForm_FormClosed;
             }
         }
 

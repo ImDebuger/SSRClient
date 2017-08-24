@@ -62,7 +62,7 @@ namespace Shadowsocks.Model
         public string server_addr;
         public int server_port;
     }
-
+    //订阅链接
     [Serializable]
     public class ServerSubscribe
     {
@@ -116,7 +116,7 @@ namespace Shadowsocks.Model
         public int keepVisitTime;
 
         public bool isHideTips;
-
+        //SSR自动更新
         public bool nodeFeedAutoUpdate;
         public List<ServerSubscribe> serverSubscribes;
 

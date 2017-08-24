@@ -229,7 +229,7 @@
             this.Controls.Add(this.skinPanel2);
             this.Controls.Add(this.skinPanel1);
             this.Name = "UserLoginForm";
-            this.Text = "UserLoginForm";
+            this.Text = "91智云登录";
             this.skinPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.skinPictureBox1)).EndInit();
             this.skinPanel2.ResumeLayout(false);
