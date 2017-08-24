@@ -19,6 +19,7 @@ namespace Shadowsocks.View
     {
         private ShadowsocksController controller;
         private Configuration _modifiedConfiguration;
+        
 
         public UserLoginForm(ShadowsocksController m_Controller)
         {
@@ -36,17 +37,34 @@ namespace Shadowsocks.View
             //  MessageBox.Show(PostHttp(url, data, "application/x-www-form-urlencoded"));
             //\u6b22\u8fce\u56de\u6765
             string con = SendDataByPost(url, data, ref cc);
-            MessageBox.Show(con);
             LoadBackInfo(con);
 
-
+           
         }
         private void LoadBackInfo(string postBack) {
             //  JsonData jsonData2 = JsonMapper.ToObject(postBack);
           JsonObject d=  (JsonObject)SimpleJson.SimpleJson.DeserializeObject(postBack);
-            Object temp ;
-            d.TryGetValue("ssrlink", out temp);
-            MessageBox.Show((String)temp);
+            Object tempObject ;
+            d.TryGetValue("ssrlink", out tempObject);
+            //设置收到的SSR订阅链接
+            ServerSubscribe newServerSub = new ServerSubscribe();
+            newServerSub.URL = "https://ss.91zhiyun.cn/link/" + "JfcK3cSHxue95rTc" + "?mu=0";
+
+            //newServerSub.Group = "91";
+            if (_modifiedConfiguration.serverSubscribes.Count >= 1)
+            {
+                _modifiedConfiguration.serverSubscribes[0]= newServerSub;  
+            }
+            else {
+                _modifiedConfiguration.serverSubscribes.Add(newServerSub);
+            }
+            controller.SaveServersConfig(_modifiedConfiguration);
+            MessageBox.Show("更新");
+            //更新订阅链接
+             UpdateFreeNode updateFreeNodeChecker = new UpdateFreeNode();
+            updateFreeNodeChecker.NewFreeNodeFound +=Program._viewController.updateFreeNodeChecker_NewFreeNodeFound; 
+            UpdateSubscribeManager newTask = new UpdateSubscribeManager();
+            newTask.CreateTask(controller.GetCurrentConfiguration(), updateFreeNodeChecker, -1, false);
         }
         /// <summary>
         /// 通过POST方式发送数据
