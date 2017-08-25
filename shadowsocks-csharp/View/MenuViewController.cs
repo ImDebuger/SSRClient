@@ -308,7 +308,7 @@ namespace Shadowsocks.View
             System.Diagnostics.Process.Start("explorer.exe", argument);
         }
 
-        void ShowBalloonTip(string title, string content, ToolTipIcon icon, int timeout)
+     public   void ShowBalloonTip(string title, string content, ToolTipIcon icon, int timeout)
         {
             _notifyIcon.BalloonTipTitle = title;
             _notifyIcon.BalloonTipText = content;
@@ -332,7 +332,7 @@ namespace Shadowsocks.View
             ShowBalloonTip(I18N.GetString("Shadowsocks"), result, ToolTipIcon.Info, 1000);
         }
 
-     public   void updateFreeNodeChecker_NewFreeNodeFound(object sender, EventArgs e)
+     private   void updateFreeNodeChecker_NewFreeNodeFound(object sender, EventArgs e)
         {
             int count = 0;
             if (!String.IsNullOrEmpty(updateFreeNodeChecker.FreeNodeResult))
@@ -1149,8 +1149,12 @@ namespace Shadowsocks.View
                 server.GetConnections().CloseAll();
             }
         }
-
-        private void URL_Split(string text, ref List<string> out_urls)
+        /// <summary>
+        /// 切合URL字符串
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="out_urls"></param>
+        public static void URL_Split(string text, ref List<string> out_urls)
         {
             if (String.IsNullOrEmpty(text))
             {

@@ -61,7 +61,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CSkin">
-      <HintPath>bin\CSkin.dll</HintPath>
+      <HintPath>bin\CSkin 4.0\CSkin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
@@ -305,10 +305,10 @@
     <None Include="Resources\ss16.png" />
     <None Include="Resources\ss24.png" />
     <None Include="Resources\ssw128.png" />
-    <Content Include="3rd\CSkin.XML" />
     <Content Include="Data\cn.txt" />
     <None Include="Data\privoxy_conf.txt" />
     <Content Include="Data\user-rule.txt" />
+    <None Include="Resources\logoText.png" />
     <Content Include="shadowsocks.ico" />
   </ItemGroup>
   <ItemGroup>

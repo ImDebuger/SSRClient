@@ -1,0 +1,97 @@
+{
+	"userEmail" : null,
+	"userKey" : null,
+	"configs" : [
+		{
+			"remarks" : "",
+			"id" : "491ED9396B6B13DAB1AD2838742E88E9",
+			"server" : "server host",
+			"server_port" : 8388,
+			"server_udp_port" : 0,
+			"password" : "0",
+			"method" : "aes-256-cfb",
+			"protocol" : "origin",
+			"protocolparam" : "",
+			"obfs" : "plain",
+			"obfsparam" : "",
+			"remarks_base64" : "",
+			"group" : "FreeSSR-public",
+			"enable" : true,
+			"udp_over_tcp" : false
+		},
+		{
+			"remarks" : "VIP-日本高速线路",
+			"id" : "D232D94B0CE1B8DB3F5D12C0893AAA8F",
+			"server" : "jp1.91zhiyun.cn",
+			"server_port" : 48278,
+			"server_udp_port" : 0,
+			"password" : "iySbDw",
+			"method" : "rc4-md5",
+			"protocol" : "auth_aes128_md5",
+			"protocolparam" : "91zhiyun",
+			"obfs" : "tls1.2_ticket_fastauth",
+			"obfsparam" : "91zhiyun",
+			"remarks_base64" : "VklQLeaXpeacrOmrmOmAn-e6v-i3rw",
+			"group" : "91智云加速",
+			"enable" : true,
+			"udp_over_tcp" : false
+		},
+		{
+			"remarks" : "VIP-美国洛杉矶",
+			"id" : "255BF58D33508225976C51B957DF5E90",
+			"server" : "us1.91zhiyun.cn",
+			"server_port" : 48278,
+			"server_udp_port" : 0,
+			"password" : "iySbDw",
+			"method" : "rc4-md5",
+			"protocol" : "auth_aes128_md5",
+			"protocolparam" : "91zhiyun",
+			"obfs" : "tls1.2_ticket_fastauth",
+			"obfsparam" : "91zhiyun",
+			"remarks_base64" : "VklQLee-juWbvea0m-adieeftg",
+			"group" : "91智云加速",
+			"enable" : true,
+			"udp_over_tcp" : false
+		}
+	],
+	"index" : 0,
+	"random" : false,
+	"sysProxyMode" : 1,
+	"shareOverLan" : false,
+	"localPort" : 1080,
+	"localAuthPassword" : "x3nrk9KXzlrZCPgW9ngC",
+	"dnsServer" : "",
+	"reconnectTimes" : 2,
+	"randomAlgorithm" : 3,
+	"randomInGroup" : false,
+	"TTL" : 0,
+	"connectTimeout" : 5,
+	"proxyRuleMode" : 2,
+	"proxyEnable" : false,
+	"pacDirectGoProxy" : false,
+	"proxyType" : 0,
+	"proxyHost" : null,
+	"proxyPort" : 0,
+	"proxyAuthUser" : null,
+	"proxyAuthPass" : null,
+	"proxyUserAgent" : null,
+	"authUser" : null,
+	"authPass" : null,
+	"autoBan" : false,
+	"sameHostForSameTarget" : false,
+	"keepVisitTime" : 180,
+	"isHideTips" : false,
+	"nodeFeedAutoUpdate" : true,
+	"serverSubscribes" : [
+		{
+			"URL" : "https://ss.91zhiyun.cn/link/JfcK3cSHxue95rTc?mu=0",
+			"Group" : "91智云加速"
+		}
+	],
+	"token" : {
+
+	},
+	"portMap" : {
+
+	}
+}

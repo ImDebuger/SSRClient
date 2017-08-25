@@ -28,35 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.bu_login = new System.Windows.Forms.Button();
             this.skinPanel1 = new CCWin.SkinControl.SkinPanel();
             this.skinPictureBox1 = new CCWin.SkinControl.SkinPictureBox();
             this.skinPanel2 = new CCWin.SkinControl.SkinPanel();
             this.skinPictureBox2 = new CCWin.SkinControl.SkinPictureBox();
-            this.skinTextBox2 = new CCWin.SkinControl.SkinTextBox();
+            this.userEmailInput = new CCWin.SkinControl.SkinTextBox();
             this.skinPanel3 = new CCWin.SkinControl.SkinPanel();
             this.skinCheckBox1 = new CCWin.SkinControl.SkinCheckBox();
             this.skinButton1 = new CCWin.SkinControl.SkinButton();
-            this.skinTextBox1 = new CCWin.SkinControl.SkinTextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.userKeyInput = new CCWin.SkinControl.SkinTextBox();
+            this.bt_freetest = new System.Windows.Forms.Button();
             this.skinPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.skinPictureBox1)).BeginInit();
             this.skinPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.skinPictureBox2)).BeginInit();
-            this.skinTextBox2.SuspendLayout();
+            this.userEmailInput.SuspendLayout();
             this.skinPanel3.SuspendLayout();
-            this.skinTextBox1.SuspendLayout();
+            this.userKeyInput.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // bu_login
             // 
-            this.button1.Location = new System.Drawing.Point(86, 169);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(153, 47);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.bu_login.Location = new System.Drawing.Point(86, 169);
+            this.bu_login.Name = "bu_login";
+            this.bu_login.Size = new System.Drawing.Size(153, 47);
+            this.bu_login.TabIndex = 0;
+            this.bu_login.Text = "button1";
+            this.bu_login.UseVisualStyleBackColor = true;
+            this.bu_login.Click += new System.EventHandler(this.button1_Click);
             // 
             // skinPanel1
             // 
@@ -86,59 +86,60 @@
             this.skinPanel2.Controls.Add(this.skinPictureBox2);
             this.skinPanel2.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel2.DownBack = null;
-            this.skinPanel2.Location = new System.Drawing.Point(444, 15);
+            this.skinPanel2.Location = new System.Drawing.Point(444, 31);
             this.skinPanel2.MouseBack = null;
             this.skinPanel2.Name = "skinPanel2";
             this.skinPanel2.NormlBack = null;
-            this.skinPanel2.Size = new System.Drawing.Size(329, 122);
+            this.skinPanel2.Size = new System.Drawing.Size(329, 106);
             this.skinPanel2.TabIndex = 3;
             // 
             // skinPictureBox2
             // 
             this.skinPictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.skinPictureBox2.Location = new System.Drawing.Point(3, 3);
+            this.skinPictureBox2.Image = global::Shadowsocks.Properties.Resources.logoText;
+            this.skinPictureBox2.Location = new System.Drawing.Point(47, 20);
             this.skinPictureBox2.Name = "skinPictureBox2";
             this.skinPictureBox2.Size = new System.Drawing.Size(228, 82);
             this.skinPictureBox2.TabIndex = 0;
             this.skinPictureBox2.TabStop = false;
             // 
-            // skinTextBox2
+            // userEmailInput
             // 
-            this.skinTextBox2.BackColor = System.Drawing.Color.Transparent;
-            this.skinTextBox2.Icon = null;
-            this.skinTextBox2.IconIsButton = false;
-            this.skinTextBox2.IconMouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox2.Location = new System.Drawing.Point(21, 17);
-            this.skinTextBox2.Margin = new System.Windows.Forms.Padding(0);
-            this.skinTextBox2.MinimumSize = new System.Drawing.Size(28, 28);
-            this.skinTextBox2.MouseBack = null;
-            this.skinTextBox2.MouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox2.Name = "skinTextBox2";
-            this.skinTextBox2.NormlBack = null;
-            this.skinTextBox2.Padding = new System.Windows.Forms.Padding(5);
-            this.skinTextBox2.Size = new System.Drawing.Size(278, 48);
+            this.userEmailInput.BackColor = System.Drawing.Color.Transparent;
+            this.userEmailInput.Icon = null;
+            this.userEmailInput.IconIsButton = false;
+            this.userEmailInput.IconMouseState = CCWin.SkinClass.ControlState.Normal;
+            this.userEmailInput.Location = new System.Drawing.Point(21, 17);
+            this.userEmailInput.Margin = new System.Windows.Forms.Padding(0);
+            this.userEmailInput.MinimumSize = new System.Drawing.Size(28, 28);
+            this.userEmailInput.MouseBack = null;
+            this.userEmailInput.MouseState = CCWin.SkinClass.ControlState.Normal;
+            this.userEmailInput.Name = "userEmailInput";
+            this.userEmailInput.NormlBack = null;
+            this.userEmailInput.Padding = new System.Windows.Forms.Padding(5);
+            this.userEmailInput.Size = new System.Drawing.Size(278, 48);
             // 
-            // skinTextBox2.BaseText
+            // userEmailInput.BaseText
             // 
-            this.skinTextBox2.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.skinTextBox2.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.skinTextBox2.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F);
-            this.skinTextBox2.SkinTxt.Location = new System.Drawing.Point(5, 5);
-            this.skinTextBox2.SkinTxt.Name = "BaseText";
-            this.skinTextBox2.SkinTxt.Size = new System.Drawing.Size(268, 18);
-            this.skinTextBox2.SkinTxt.TabIndex = 0;
-            this.skinTextBox2.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox2.SkinTxt.WaterText = "";
-            this.skinTextBox2.TabIndex = 4;
+            this.userEmailInput.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.userEmailInput.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.userEmailInput.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F);
+            this.userEmailInput.SkinTxt.Location = new System.Drawing.Point(5, 5);
+            this.userEmailInput.SkinTxt.Name = "BaseText";
+            this.userEmailInput.SkinTxt.Size = new System.Drawing.Size(268, 18);
+            this.userEmailInput.SkinTxt.TabIndex = 0;
+            this.userEmailInput.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+            this.userEmailInput.SkinTxt.WaterText = "";
+            this.userEmailInput.TabIndex = 4;
             // 
             // skinPanel3
             // 
             this.skinPanel3.BackColor = System.Drawing.Color.Transparent;
             this.skinPanel3.Controls.Add(this.skinCheckBox1);
             this.skinPanel3.Controls.Add(this.skinButton1);
-            this.skinPanel3.Controls.Add(this.skinTextBox1);
-            this.skinPanel3.Controls.Add(this.button1);
-            this.skinPanel3.Controls.Add(this.skinTextBox2);
+            this.skinPanel3.Controls.Add(this.userKeyInput);
+            this.skinPanel3.Controls.Add(this.bu_login);
+            this.skinPanel3.Controls.Add(this.userEmailInput);
             this.skinPanel3.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel3.DownBack = null;
             this.skinPanel3.Location = new System.Drawing.Point(447, 143);
@@ -181,50 +182,56 @@
             this.skinButton1.Text = "skinButton1";
             this.skinButton1.UseVisualStyleBackColor = false;
             // 
-            // skinTextBox1
+            // userKeyInput
             // 
-            this.skinTextBox1.BackColor = System.Drawing.Color.Transparent;
-            this.skinTextBox1.Icon = null;
-            this.skinTextBox1.IconIsButton = false;
-            this.skinTextBox1.IconMouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox1.Location = new System.Drawing.Point(19, 82);
-            this.skinTextBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.skinTextBox1.MinimumSize = new System.Drawing.Size(28, 28);
-            this.skinTextBox1.MouseBack = null;
-            this.skinTextBox1.MouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox1.Name = "skinTextBox1";
-            this.skinTextBox1.NormlBack = null;
-            this.skinTextBox1.Padding = new System.Windows.Forms.Padding(5);
-            this.skinTextBox1.Size = new System.Drawing.Size(278, 48);
+            this.userKeyInput.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.userKeyInput.BackColor = System.Drawing.Color.Transparent;
+            this.userKeyInput.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.userKeyInput.Icon = global::Shadowsocks.Properties.Resources.ssw128;
+            this.userKeyInput.IconIsButton = false;
+            this.userKeyInput.IconMouseState = CCWin.SkinClass.ControlState.Normal;
+            this.userKeyInput.Location = new System.Drawing.Point(19, 82);
+            this.userKeyInput.Margin = new System.Windows.Forms.Padding(0);
+            this.userKeyInput.MinimumSize = new System.Drawing.Size(28, 28);
+            this.userKeyInput.MouseBack = null;
+            this.userKeyInput.MouseState = CCWin.SkinClass.ControlState.Normal;
+            this.userKeyInput.Name = "userKeyInput";
+            this.userKeyInput.NormlBack = null;
+            this.userKeyInput.Padding = new System.Windows.Forms.Padding(5, 5, 28, 5);
+            this.userKeyInput.Size = new System.Drawing.Size(278, 48);
             // 
-            // skinTextBox1.BaseText
+            // userKeyInput.BaseText
             // 
-            this.skinTextBox1.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.skinTextBox1.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.skinTextBox1.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F);
-            this.skinTextBox1.SkinTxt.Location = new System.Drawing.Point(5, 5);
-            this.skinTextBox1.SkinTxt.Name = "BaseText";
-            this.skinTextBox1.SkinTxt.Size = new System.Drawing.Size(268, 18);
-            this.skinTextBox1.SkinTxt.TabIndex = 0;
-            this.skinTextBox1.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox1.SkinTxt.WaterText = "";
-            this.skinTextBox1.TabIndex = 5;
+            this.userKeyInput.SkinTxt.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.userKeyInput.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.userKeyInput.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.userKeyInput.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F);
+            this.userKeyInput.SkinTxt.Location = new System.Drawing.Point(5, 5);
+            this.userKeyInput.SkinTxt.Name = "BaseText";
+            this.userKeyInput.SkinTxt.Size = new System.Drawing.Size(245, 18);
+            this.userKeyInput.SkinTxt.TabIndex = 0;
+            this.userKeyInput.SkinTxt.Text = "请输入密码";
+            this.userKeyInput.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+            this.userKeyInput.SkinTxt.WaterText = "";
+            this.userKeyInput.TabIndex = 5;
             // 
-            // button2
+            // bt_freetest
             // 
-            this.button2.Location = new System.Drawing.Point(533, 399);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(153, 47);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.bt_freetest.Location = new System.Drawing.Point(533, 399);
+            this.bt_freetest.Name = "bt_freetest";
+            this.bt_freetest.Size = new System.Drawing.Size(153, 47);
+            this.bt_freetest.TabIndex = 8;
+            this.bt_freetest.Text = "button2";
+            this.bt_freetest.UseVisualStyleBackColor = true;
+            this.bt_freetest.Click += new System.EventHandler(this.button2_Click);
             // 
             // UserLoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(785, 461);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.bt_freetest);
             this.Controls.Add(this.skinPanel3);
             this.Controls.Add(this.skinPanel2);
             this.Controls.Add(this.skinPanel1);
@@ -234,28 +241,28 @@
             ((System.ComponentModel.ISupportInitialize)(this.skinPictureBox1)).EndInit();
             this.skinPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.skinPictureBox2)).EndInit();
-            this.skinTextBox2.ResumeLayout(false);
-            this.skinTextBox2.PerformLayout();
+            this.userEmailInput.ResumeLayout(false);
+            this.userEmailInput.PerformLayout();
             this.skinPanel3.ResumeLayout(false);
             this.skinPanel3.PerformLayout();
-            this.skinTextBox1.ResumeLayout(false);
-            this.skinTextBox1.PerformLayout();
+            this.userKeyInput.ResumeLayout(false);
+            this.userKeyInput.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bu_login;
         private CCWin.SkinControl.SkinPanel skinPanel1;
         private CCWin.SkinControl.SkinPictureBox skinPictureBox1;
         private CCWin.SkinControl.SkinPanel skinPanel2;
         private CCWin.SkinControl.SkinPictureBox skinPictureBox2;
-        private CCWin.SkinControl.SkinTextBox skinTextBox2;
+        private CCWin.SkinControl.SkinTextBox userEmailInput;
         private CCWin.SkinControl.SkinPanel skinPanel3;
         private CCWin.SkinControl.SkinButton skinButton1;
-        private CCWin.SkinControl.SkinTextBox skinTextBox1;
-        private System.Windows.Forms.Button button2;
+        private CCWin.SkinControl.SkinTextBox userKeyInput;
+        private System.Windows.Forms.Button bt_freetest;
         private CCWin.SkinControl.SkinCheckBox skinCheckBox1;
     }
 }

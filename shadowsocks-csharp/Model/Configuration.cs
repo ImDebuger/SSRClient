@@ -81,10 +81,13 @@ namespace Shadowsocks.Model
     [Serializable]
     public class Configuration
     {
-        public List<Server> configs;
+        public string userEmail;
+        public string userKey;
+
+        public List<Server> configs;    //节点列表
         public int index;
         public bool random;
-        public int sysProxyMode;
+        public int sysProxyMode;    //默认链接方式
         public bool shareOverLan;
         public int localPort;
         public string localAuthPassword;
@@ -116,7 +119,7 @@ namespace Shadowsocks.Model
         public int keepVisitTime;
 
         public bool isHideTips;
-        //SSR自动更新
+        //SSR自动更新 开关
         public bool nodeFeedAutoUpdate;
         public List<ServerSubscribe> serverSubscribes;
 
@@ -385,8 +388,8 @@ namespace Shadowsocks.Model
             dnsServer = "";
 
             randomAlgorithm = (int)ServerSelectStrategy.SelectAlgorithm.LowException;
-            random = true;
-            sysProxyMode = (int)ProxyMode.Global;
+            random = false;
+            sysProxyMode = (int)ProxyMode.Direct;
             proxyRuleMode = (int)ProxyRuleMode.BypassLanAndChina;
 
             nodeFeedAutoUpdate = true;
@@ -403,6 +406,8 @@ namespace Shadowsocks.Model
 
         public void CopyFrom(Configuration config)
         {
+            userEmail = config.userEmail;
+            userKey = config.userKey;
             configs = config.configs;
             index = config.index;
             random = config.random;
@@ -582,7 +587,10 @@ namespace Shadowsocks.Model
         {
             return new Server();
         }
-
+        /// <summary>
+        /// 是否只有一个默认链接配置
+        /// </summary>
+        /// <returns></returns>
         public bool isDefaultConfig()
         {
             if (configs.Count == 1 && configs[0].server == Configuration.GetDefaultServer().server)

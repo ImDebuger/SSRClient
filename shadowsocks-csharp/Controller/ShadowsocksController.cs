@@ -38,10 +38,14 @@ namespace Shadowsocks.Controller
         private bool firstRun = true;
 
 
+        private String homePageURL;
+        public String HomePageURL { get { return homePageURL; } }
+
         public class PathEventArgs : EventArgs
         {
             public string Path;
         }
+
 
         public event EventHandler ConfigChanged;
         public event EventHandler ToggleModeChanged;
@@ -61,6 +65,8 @@ namespace Shadowsocks.Controller
 
         public ShadowsocksController()
         {
+           
+            UpdateHomePageByGitHub();
             _config = Configuration.Load();
             _transfer = ServerTransferTotal.Load();
 
@@ -73,6 +79,7 @@ namespace Shadowsocks.Controller
                 }
             }
         }
+   
 
         public void Start()
         {
@@ -554,5 +561,27 @@ namespace Shadowsocks.Controller
                 ShowConfigFormEvent(index, new EventArgs());
             }
         }
+        /// <summary>
+        /// 更新官网首页
+        /// </summary>
+        private void UpdateHomePageByGitHub() {
+            try
+            {
+                WebClient http = new WebClient();
+                http.Proxy = null;
+                http.DownloadStringCompleted += delegate (object sender, DownloadStringCompletedEventArgs e)
+                {
+                    homePageURL = e.Result;
+                };
+                http.DownloadStringAsync(new Uri("https://raw.githubusercontent.com/ImDebuger/WebInfo/master/index.txt"));
+            }
+            catch (Exception e)
+            {
+                Program._viewController.ShowBalloonTip("官网获取失败",
+                I18N.GetString("请联系管理员"), System.Windows.Forms.ToolTipIcon.Info, 10000);
+                Logging.LogUsefulException(e);
+            }
+        }
+
     }
 }
