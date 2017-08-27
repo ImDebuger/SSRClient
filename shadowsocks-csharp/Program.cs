@@ -78,7 +78,19 @@ namespace Shadowsocks
                 _controller = new ShadowsocksController();
                 HostMap.Instance().LoadHostFile();
 #if !_CONSOLE
-                _viewController = new MenuViewController(_controller);
+                if (!_controller.TestClientTokenStaus())
+                {
+
+                    UserLoginForm userLoginForm = new UserLoginForm(_controller);
+                    userLoginForm.Show();
+                    userLoginForm.Activate();
+                    userLoginForm.BringToFront();
+                }
+                else
+                {
+                    _viewController = new MenuViewController(_controller);
+                }
+
 #endif
 
                 _controller.Start();
@@ -93,6 +105,27 @@ namespace Shadowsocks
             _controller.Stop();
 #endif
         }
+        /// <summary>
+        /// 检查登录情况、在获取官网网址后
+        /// </summary>
+//        public static void CheckLoginToken()
+//        {
+//#if !_CONSOLE
+//            if (!_controller. TestClientTokenStaus())
+//            {
+
+//                UserLoginForm userLoginForm = new UserLoginForm(_controller);
+//                userLoginForm.Show();
+//                userLoginForm.Activate();
+//                userLoginForm.BringToFront();
+//            }
+//            else
+//            {
+//                Program._viewController = new MenuViewController(_controller);
+//            }
+
+//#endif
+//        }
 
         private static void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
         {

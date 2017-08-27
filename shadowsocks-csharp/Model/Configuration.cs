@@ -81,8 +81,8 @@ namespace Shadowsocks.Model
     [Serializable]
     public class Configuration
     {
-        public string userEmail;
-        public string userKey;
+        public string homePageUrl= ShadowsocksController.LocalhomeURL;
+        public string userToken="";
 
         public List<Server> configs;    //节点列表
         public int index;
@@ -406,8 +406,8 @@ namespace Shadowsocks.Model
 
         public void CopyFrom(Configuration config)
         {
-            userEmail = config.userEmail;
-            userKey = config.userKey;
+            homePageUrl = config.homePageUrl;
+            userToken = config.userToken;
             configs = config.configs;
             index = config.index;
             random = config.random;

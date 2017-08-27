@@ -143,6 +143,7 @@
     <Compile Include="Controller\I18N.cs" />
     <Compile Include="Controller\Listener.cs" />
     <Compile Include="Controller\Logging.cs" />
+    <Compile Include="Controller\LoginToken.cs" />
     <Compile Include="Controller\ProxyAuth.cs" />
     <Compile Include="Controller\ProxySocket.cs" />
     <Compile Include="Controller\Socks5Forwarder.cs" />
@@ -309,6 +310,16 @@
     <None Include="Data\privoxy_conf.txt" />
     <Content Include="Data\user-rule.txt" />
     <None Include="Resources\logoText.png" />
+    <None Include="Resources\用户.png" />
+    <None Include="Resources\密码.png" />
+    <None Include="Resources\button.png" />
+    <None Include="Resources\button_2.png" />
+    <None Include="Resources\sysbtn_close_down.png" />
+    <None Include="Resources\sysbtn_close_hover.png" />
+    <None Include="Resources\sysbtn_close_normal.png" />
+    <None Include="Resources\FsEFkr0Ixlh2X9gb9tsnLijXdkLP.png" />
+    <None Include="Resources\2.png" />
+    <None Include="Resources\bg.png" />
     <Content Include="shadowsocks.ico" />
   </ItemGroup>
   <ItemGroup>

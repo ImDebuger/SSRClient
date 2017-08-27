@@ -18,8 +18,17 @@ using CCWin.SkinControl;
 
 namespace Shadowsocks.View
 {
+
     public partial class UserLoginForm : CCSkinMain
     {
+        public class data
+        {
+            public string token;
+            public string user_id;
+            public string ssrlink;
+        }
+
+        private UserLoginForm userLoginForm;
         private ShadowsocksController controller;
         private Configuration _modifiedConfiguration;
         private UpdateFreeNode updateFreeNodeChecker;
@@ -29,6 +38,8 @@ namespace Shadowsocks.View
         {
             controller = m_Controller;
             _modifiedConfiguration = controller.GetConfiguration();
+            this.FormClosed += userLoginForm_FormClosed;
+
             InitializeComponent();
         }
 
@@ -48,47 +59,77 @@ namespace Shadowsocks.View
             SentPostToLogin(userEmailInput.SkinTxt.Text, userKeyInput.SkinTxt.Text);
         }
         private void SentPostToLogin(string useremail,string userkey) {
+
+
             string url = Program._controller.HomePageURL + "/client/login";
-            string data = "email="+ useremail + "&" +
-                                "passwd="+ userkey + "&+" +
-                                "remember_me="+"1";
+            string data = "email=" + useremail + "&" +
+                                "passwd=" + userkey + "&+" +
+                                "remember_me=" + "1";
 
             CookieContainer cc = new CookieContainer();
             cc.Add(new System.Uri(Program._controller.HomePageURL), new Cookie("91zhiyunlogin", "xx"));
 
             string con = SendDataByPost(url, data, ref cc);
+   
             LoadReceiveInfo(con);
-
+         
             bu_login.Enabled = true;
             this.Cursor = Cursors.Default;//正常状态
         }
+        /// <summary>
+        /// 加载登录信息
+        /// </summary>
+        /// <param name="postBack"></param>
         private void LoadReceiveInfo(string postBack) {
-            //  JsonData jsonData2 = JsonMapper.ToObject(postBack);
+
           JsonObject d=  (JsonObject)SimpleJson.SimpleJson.DeserializeObject(postBack);
             Object tempObject ;
-            d.TryGetValue("ssrlink", out tempObject);
-            //设置收到的SSR订阅链接
-            ServerSubscribe newServerSub = new ServerSubscribe();
-            newServerSub.URL = Program._controller.HomePageURL + "/link/" + tempObject + "?mu=0";
-            newServerSub.Group = "91智云加速";
-            //存储
-
-            if (_modifiedConfiguration.serverSubscribes.Count >= 1)
+            //是否登录成功
+            d.TryGetValue("ret", out tempObject);
+            if (tempObject.ToString().Equals("1"))
             {
-                _modifiedConfiguration.serverSubscribes[0] = newServerSub;
-            }
-            else
-            {
-                _modifiedConfiguration.serverSubscribes.Add(newServerSub);
+                //记录登录口令
+                d.TryGetValue("data", out tempObject);
+                data loginData = SimpleJson.SimpleJson.DeserializeObject<data>(tempObject.ToString());
+
+                _modifiedConfiguration.userToken = loginData.token;
+
+                //设置收到的SSR订阅链接
+                string ssrLink = loginData.ssrlink;
+                
+                ServerSubscribe newServerSub = new ServerSubscribe();
+                newServerSub.URL = Program._controller.HomePageURL + "/link/" + ssrLink + "?mu=0";
+                newServerSub.Group = "91智云加速";
+                //存储
+
+                if (_modifiedConfiguration.serverSubscribes.Count >= 1)
+                {
+                    _modifiedConfiguration.serverSubscribes[0] = newServerSub;
+                }
+                else
+                {
+                    _modifiedConfiguration.serverSubscribes.Add(newServerSub);
+                }
+
+                controller.SaveServersConfig(_modifiedConfiguration);
+                //生成小图标
+                Program._viewController = new MenuViewController(controller);
+                //关闭登录窗口
+                this.Close();
+            }//登录失败
+            else {
+                d.TryGetValue("msg", out tempObject);
+                MessageBox.Show(tempObject.ToString());
+
             }
 
-            controller.SaveServersConfig(_modifiedConfiguration);
+
 
             //更新订阅链接
-              updateFreeNodeChecker = new UpdateFreeNode();
-            updateFreeNodeChecker.NewFreeNodeFound +=updateFreeNodeChecker_NewFreeNodeFound;
-            updateSubscribeManager = new UpdateSubscribeManager();
-            updateSubscribeManager.CreateTask(controller.GetCurrentConfiguration(), updateFreeNodeChecker, -1, false);
+            //  updateFreeNodeChecker = new UpdateFreeNode();
+            //updateFreeNodeChecker.NewFreeNodeFound +=updateFreeNodeChecker_NewFreeNodeFound;
+            //updateSubscribeManager = new UpdateSubscribeManager();
+            //updateSubscribeManager.CreateTask(controller.GetCurrentConfiguration(), updateFreeNodeChecker, -1, false);
 
         }
         /// <summary>
@@ -353,12 +394,21 @@ namespace Shadowsocks.View
             }
            
         }
-
-        private void button2_Click(object sender, EventArgs e)
+    
+        //关闭登录界面
+        void userLoginForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            userLoginForm = null;
+            Util.Utils.ReleaseMemory();
+        }
+        private void freelogin_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(Program._controller.HomePageURL);
         }
 
-
+        private void image_logo_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Program._controller.HomePageURL);
+        }
     }
 }

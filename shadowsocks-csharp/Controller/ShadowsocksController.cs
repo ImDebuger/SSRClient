@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading;
 using System.Net.Sockets;
 using System.Net;
+using SimpleJson;
+using System.Windows.Forms;
 
 namespace Shadowsocks.Controller
 {
@@ -23,7 +25,8 @@ namespace Shadowsocks.Controller
         // handle user actions
         // manipulates UI
         // interacts with low level logic
-
+        
+        public static string LocalhomeURL= "https://ss.91zhiyun.cn";
         private Listener _listener;
         private List<Listener> _port_map_listener;
         private PACServer _pacServer;
@@ -38,7 +41,7 @@ namespace Shadowsocks.Controller
         private bool firstRun = true;
 
 
-        private String homePageURL;
+        private String homePageURL= LocalhomeURL;
         public String HomePageURL { get { return homePageURL; } }
 
         public class PathEventArgs : EventArgs
@@ -561,10 +564,13 @@ namespace Shadowsocks.Controller
                 ShowConfigFormEvent(index, new EventArgs());
             }
         }
+        #region 变更
+        public delegate void OnInfoUpdateOver();
         /// <summary>
         /// 更新官网首页
         /// </summary>
         private void UpdateHomePageByGitHub() {
+            homePageURL = GetConfiguration().homePageUrl;
             try
             {
                 WebClient http = new WebClient();
@@ -572,16 +578,83 @@ namespace Shadowsocks.Controller
                 http.DownloadStringCompleted += delegate (object sender, DownloadStringCompletedEventArgs e)
                 {
                     homePageURL = e.Result;
+                    homePageURL = homePageURL.Substring(0,homePageURL.Length-1);
+
+                    //如果网址更新
+                    if (!GetConfiguration().homePageUrl.Equals(homePageURL)) {
+                        GetConfiguration().homePageUrl = homePageURL;
+                        SaveServersConfig(GetConfiguration());
+                        MessageBox.Show("官网地址更换\n请重新启动客户端");
+                     
+                    }
+
                 };
                 http.DownloadStringAsync(new Uri("https://raw.githubusercontent.com/ImDebuger/WebInfo/master/index.txt"));
             }
             catch (Exception e)
             {
                 Program._viewController.ShowBalloonTip("官网获取失败",
-                I18N.GetString("请联系管理员"), System.Windows.Forms.ToolTipIcon.Info, 10000);
+               "请联系管理员", System.Windows.Forms.ToolTipIcon.Info, 10000);
                 Logging.LogUsefulException(e);
             }
         }
+      
+        public bool TestClientTokenStaus() {
+             string url =/* "https://ss.91zhiyun.cn" */ homePageURL + "/client/login/{token}";
+            string data = "token=" + GetConfiguration().userToken;
+
+            if (data.Equals("")) {
+                return false;
+            }
+
+          string loginInfo=  HttpGet(url, data);
+            JsonObject d = (JsonObject)SimpleJson.SimpleJson.DeserializeObject(loginInfo);
+            Object tempObject;
+            MessageBox.Show(d.ToString());
+            //LoginToken
+            d.TryGetValue("data", out tempObject);
+            LoginToken tokenData = SimpleJson.SimpleJson.DeserializeObject<LoginToken>(tempObject.ToString());
+            //时间是否过期
+            if (ShadowsocksController. ConvertStringToDateTime(tokenData.expireTime).CompareTo ( DateTime.Now)>0)
+            {
+                //是否登录成功
+                d.TryGetValue("ret", out tempObject);
+                return tempObject.ToString().Equals("1");
+            }
+            else {
+                return false;
+            }
+           
+        }
+        public string HttpGet(string Url, string postDataStr)
+        {
+            string temp = Url + (postDataStr == "" ? "" : "?") + postDataStr;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url + (postDataStr == "" ? "" : "?") + postDataStr);
+            request.Method = "GET";
+            request.ContentType = "text/html;charset=UTF-8";
+
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream myResponseStream = response.GetResponseStream();
+            StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.UTF8);
+            string retString = myStreamReader.ReadToEnd();
+            myStreamReader.Close();
+            myResponseStream.Close();
+
+            return retString;
+        }
+        /// <summary>        
+        /// 时间戳转为C#格式时间        
+        /// </summary>        
+        /// <param name=”timeStamp”></param>        
+        /// <returns></returns>        
+        public static DateTime ConvertStringToDateTime(string timeStamp)
+        {
+            System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1)); // 当地时区
+
+
+            return  startTime.AddSeconds(long.Parse( timeStamp));
+        }
+        #endregion
 
     }
 }
