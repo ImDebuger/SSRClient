@@ -81,7 +81,7 @@ namespace Shadowsocks.Model
     [Serializable]
     public class Configuration
     {
-        public string homePageUrl= ShadowsocksController.LocalhomeURL;
+        public string homePageUrl;
         public string userToken="";
         public string userSSRLink;
 

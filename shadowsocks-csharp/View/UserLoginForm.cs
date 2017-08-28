@@ -37,7 +37,7 @@ namespace Shadowsocks.View
             controller = m_Controller;
             _modifiedConfiguration = controller.GetConfiguration();
             this.FormClosed += userLoginForm_FormClosed;
-
+            UpdateHomePageByGitHub();
            // _modifiedConfiguration.configs.Clear();
 
             InitializeComponent();
@@ -61,15 +61,13 @@ namespace Shadowsocks.View
         private void SentPostToLogin(string useremail,string userkey) {
 
 
-            string url = Program._controller.HomePageURL + "/client/login";
+            string url = controller.GetConfiguration().homePageUrl + "/client/login";
             string data = "email=" + useremail + "&" +
                                 "passwd=" + userkey + "&+" +
                                 "remember_me=" + "1";
 
-            CookieContainer cc = new CookieContainer();
-            cc.Add(new System.Uri(Program._controller.HomePageURL), new Cookie("91zhiyunlogin", "xx"));
 
-            string con = SendDataByPost(url, data, ref cc);
+            string con = SendDataByPost(url, data);
    
             LoadReceiveInfo(con);
          
@@ -102,7 +100,7 @@ namespace Shadowsocks.View
                 }
 
                 //记录SSR链接
-                _modifiedConfiguration.userSSRLink = Program._controller.HomePageURL + "/link/" + loginData.ssrlink + "?mu=0";
+                _modifiedConfiguration.userSSRLink = controller.GetConfiguration().homePageUrl + "/link/" + loginData.ssrlink + "?mu=0";
                
 
                 controller.SaveServersConfig(_modifiedConfiguration);
@@ -126,19 +124,11 @@ namespace Shadowsocks.View
         /// <param name="postDataStr">Post数据</param>
         /// <param name="cookie">Cookie容器</param>
         /// <returns></returns>
-        public string SendDataByPost(string Url, string postDataStr, ref CookieContainer cookie)
+        public string SendDataByPost(string Url, string postDataStr)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(Url);
             request.Proxy = null;
-            if (cookie.Count == 0)
-            {
-                request.CookieContainer = new CookieContainer();
-                cookie = request.CookieContainer;
-            }
-            else
-            {
-                request.CookieContainer = cookie;
-            }
+
 
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
@@ -158,8 +148,38 @@ namespace Shadowsocks.View
             return retString;
         }
 
+        /// <summary>
+        /// 更新官网首页
+        /// </summary>
+        public void UpdateHomePageByGitHub()
+        {
+            try
+            {
+                WebClient http = new WebClient();
+                http.Proxy = null;
+                http.DownloadStringCompleted += delegate (object sender, DownloadStringCompletedEventArgs e)
+                {
+                    string homePageURL = e.Result;
+                    homePageURL = homePageURL.Substring(0, homePageURL.Length - 1);
 
-    
+                    //如果网址更新
+                    
+                    if (_modifiedConfiguration.homePageUrl != homePageURL)
+                    {
+
+                        _modifiedConfiguration.homePageUrl = homePageURL;
+                        controller.SaveServersConfig(_modifiedConfiguration);
+                    }
+
+                };
+                http.DownloadStringAsync(new Uri("https://raw.githubusercontent.com/ImDebuger/WebInfo/master/index.txt"));
+            }
+            catch (Exception e)
+            {
+                Logging.LogUsefulException(e);
+            }
+        }
+
         //关闭登录界面
         void userLoginForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -171,17 +191,17 @@ namespace Shadowsocks.View
         }
         private void freelogin_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(Program._controller.HomePageURL);
+            System.Diagnostics.Process.Start(controller.GetConfiguration().homePageUrl);
         }
 
         private void image_logo_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(Program._controller.HomePageURL);
+            System.Diagnostics.Process.Start(controller.GetConfiguration().homePageUrl);
         }
 
         private void bt_forget_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(Program._controller.HomePageURL+ "/password/reset");
+            System.Diagnostics.Process.Start(controller.GetConfiguration().homePageUrl + "/password/reset");
         }
 
 

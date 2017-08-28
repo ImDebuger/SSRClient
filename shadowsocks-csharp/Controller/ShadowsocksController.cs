@@ -25,7 +25,6 @@ namespace Shadowsocks.Controller
         // handle user actions
         // manipulates UI
         // interacts with low level logic
-        public static string LocalhomeURL= "https://ss.91zhiyun.cn";
 
         private Listener _listener;
         private List<Listener> _port_map_listener;
@@ -40,9 +39,6 @@ namespace Shadowsocks.Controller
         private bool stopped = false;
         private bool firstRun = true;
 
-
-        private String homePageURL= LocalhomeURL;
-        public String HomePageURL { get { return homePageURL; } }
 
         public class PathEventArgs : EventArgs
         {
@@ -69,7 +65,6 @@ namespace Shadowsocks.Controller
         public ShadowsocksController()
         {
            
-            UpdateHomePageByGitHub();
             _config = Configuration.Load();
             _transfer = ServerTransferTotal.Load();
 
@@ -565,42 +560,11 @@ namespace Shadowsocks.Controller
             }
         }
         #region 变更
-        public delegate void OnInfoUpdateOver();
-        /// <summary>
-        /// 更新官网首页
-        /// </summary>
-        private void UpdateHomePageByGitHub() {
-            homePageURL = GetConfiguration().homePageUrl;
-            try
-            {
-                WebClient http = new WebClient();
-                http.Proxy = null;
-                http.DownloadStringCompleted += delegate (object sender, DownloadStringCompletedEventArgs e)
-                {
-                    homePageURL = e.Result;
-                    homePageURL = homePageURL.Substring(0,homePageURL.Length-1);
 
-                    //如果网址更新
-                    if (!GetConfiguration().homePageUrl.Equals(homePageURL)) {
-                        GetConfiguration().homePageUrl = homePageURL;
-                        SaveServersConfig(GetConfiguration());
-                        MessageBox.Show("官网地址更换\n请重新启动客户端");
-                     
-                    }
-
-                };
-                http.DownloadStringAsync(new Uri("https://raw.githubusercontent.com/ImDebuger/WebInfo/master/index.txt"));
-            }
-            catch (Exception e)
-            {
-                Program._viewController.ShowBalloonTip("官网获取失败",
-               "请联系管理员", System.Windows.Forms.ToolTipIcon.Info, 10000);
-                Logging.LogUsefulException(e);
-            }
-        }
+      
       
         public bool TestClientTokenStaus() {
-             string url =/* "https://ss.91zhiyun.cn" */ homePageURL + "/client/login/{token}";
+             string url =/* "https://ss.91zhiyun.cn" */ GetCurrentConfiguration().homePageUrl + "/client/login/{token}";
             string data = "token=" + GetConfiguration().userToken;
 
             if (data.Equals("token=")) {

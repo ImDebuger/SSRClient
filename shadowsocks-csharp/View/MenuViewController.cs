@@ -249,8 +249,8 @@ namespace Shadowsocks.View
                 //                                                    CreateMenuItem("Update subscribe SSR node", new EventHandler(this.CheckNodeUpdate_Click)),
                 //                                                    CreateMenuItem("Update subscribe SSR node(bypass proxy)", new EventHandler(this.CheckNodeUpdateBypassProxy_Click)),
                 //                                                }),
-                         new MenuItem("-"),
-                          SelectRandomItem = CreateMenuItem("Load balance", new EventHandler(this.SelectRandomItem_Click)),
+
+                        
                            new MenuItem("-"),
                  CreateMenuItem("Global settings...", new EventHandler(this.Setting_Click)),
            UpdateItem = CreateMenuItem("Update available", new EventHandler(this.UpdateItem_Clicked)),
@@ -282,18 +282,17 @@ namespace Shadowsocks.View
                                                 CreateMenuItem("Edit local PAC file...", new EventHandler(this.EditPACFileItem_Click)),
                                                 CreateMenuItem("Edit user rule for GFWList...", new EventHandler(this.EditUserRuleFileForGFWListItem_Click)),
                                                 new MenuItem("-"),
-                                               
+                                                 SelectRandomItem = CreateMenuItem("Load balance", new EventHandler(this.SelectRandomItem_Click)),
                                                 CreateMenuItem("Port settings...", new EventHandler(this.ShowPortMapItem_Click)),
                 }),
                  new MenuItem("-"),
                   //帮助
                 CreateMenuGroup("Help", new MenuItem[] {
-                                            CreateMenuItem("Check update", new EventHandler(this.CheckUpdate_Click)),
-                                             new MenuItem("-"),
-                                             CreateMenuItem("HomePage", new EventHandler(this.HomePage_Click)),
+                                              CreateMenuItem("HomePage", new EventHandler(this.HomePage_Click)),
                                              CreateMenuItem("QQService", new EventHandler(this.QQService_Click)),
                                                CreateMenuItem("TelegramService", new EventHandler(this.TelegramService_Click)),
-                                             
+                                               new MenuItem("-"),
+                                            CreateMenuItem("Check update", new EventHandler(this.CheckUpdate_Click)),
                                       //      CreateMenuItem("Show logs...", new EventHandler(this.ShowLogItem_Click)),
                                       //      CreateMenuItem("Open wiki...", new EventHandler(this.OpenWiki_Click)),
                                       //      CreateMenuItem("Feedback...", new EventHandler(this.FeedbackItem_Click)),
@@ -1157,7 +1156,7 @@ namespace Shadowsocks.View
 
         private void HomePage_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(controller.HomePageURL);
+            System.Diagnostics.Process.Start(controller.GetCurrentConfiguration().homePageUrl);
         }
         private void QQService_Click(object sender, EventArgs e)
         {
