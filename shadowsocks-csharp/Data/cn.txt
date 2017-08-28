@@ -1,13 +1,13 @@
-# translation for Simplified Chinese
+﻿# translation for Simplified Chinese
 
 Shadowsocks=Shadowsocks
 
 # Menu items
 
-Mode=系统代理模式
+Mode=加速模式
 No modify system proxy=保持当前状态不修改
 Disable system proxy=直连模式
-PAC=PAC 模式
+PAC=PAC 模式（推荐）
 Global=全局模式
 Proxy rule=代理规则
 Bypass LAN=绕过局域网
@@ -21,8 +21,8 @@ Import servers from file...=从文件导入服务器...
 Servers Subscribe=服务器订阅
 Subscribe setting...=SSR服务器订阅设置...
 Update subscribe SSR node=更新SSR服务器订阅
-Update subscribe SSR node(bypass proxy)=更新SSR服务器订阅（不通过代理）
-Global settings...=选项设置...
+Update subscribe SSR node(bypass proxy)=更新
+Global settings...=设置...
 Start on Boot=开机启动
 Allow Clients from LAN=允许来自局域网的连接
 Load balance=服务器负载均衡
@@ -52,9 +52,14 @@ Gen custom QRCode...=自定义生成二维码
 Reset password...=设置客户端密码...
 About...=关于...
 Donate...=捐助...
+Advanced Options=Advanced Options
+Sign Out=退出登录
 Quit=退出
 Edit Servers=编辑服务器
-Global Settings=选项设置
+Global Settings=设置
+HomePage=官网
+QQService=QQ客服
+TelegramService=Telegram群
 
 # Config Form
 
@@ -236,6 +241,6 @@ Failed to update registry=无法修改注册表
 System Proxy On: =系统代理已启用：
 Running: Port {0}=正在运行：端口 {0}
 Password NOT match=密码不匹配
-Update subscribe SSR node success=SSR服务器订阅更新成功
-Update subscribe SSR node failure=SSR服务器订阅更新失败
+Update subscribe SSR node success=节点列表更新成功
+Update subscribe SSR node failure=节点列表更新失败
 Success=成功

@@ -25,8 +25,8 @@ namespace Shadowsocks.Controller
         // handle user actions
         // manipulates UI
         // interacts with low level logic
-        
         public static string LocalhomeURL= "https://ss.91zhiyun.cn";
+
         private Listener _listener;
         private List<Listener> _port_map_listener;
         private PACServer _pacServer;
@@ -603,27 +603,27 @@ namespace Shadowsocks.Controller
              string url =/* "https://ss.91zhiyun.cn" */ homePageURL + "/client/login/{token}";
             string data = "token=" + GetConfiguration().userToken;
 
-            if (data.Equals("")) {
+            if (data.Equals("token=")) {
                 return false;
             }
 
           string loginInfo=  HttpGet(url, data);
             JsonObject d = (JsonObject)SimpleJson.SimpleJson.DeserializeObject(loginInfo);
             Object tempObject;
-            MessageBox.Show(d.ToString());
-            //LoginToken
-            d.TryGetValue("data", out tempObject);
-            LoginToken tokenData = SimpleJson.SimpleJson.DeserializeObject<LoginToken>(tempObject.ToString());
-            //时间是否过期
-            if (ShadowsocksController. ConvertStringToDateTime(tokenData.expireTime).CompareTo ( DateTime.Now)>0)
+
+            //是否登录成功
+            d.TryGetValue("ret", out tempObject);
+            if (tempObject.ToString().Equals("1"))
             {
-                //是否登录成功
-                d.TryGetValue("ret", out tempObject);
-                return tempObject.ToString().Equals("1");
+                d.TryGetValue("data", out tempObject);
+                LoginToken tokenData = SimpleJson.SimpleJson.DeserializeObject<LoginToken>(tempObject.ToString());
+                //时间是否过期
+                return ShadowsocksController.ConvertStringToDateTime(tokenData.expireTime).CompareTo(DateTime.Now) > 0;
             }
             else {
                 return false;
             }
+
            
         }
         public string HttpGet(string Url, string postDataStr)

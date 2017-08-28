@@ -314,7 +314,7 @@ namespace Shadowsocks.Model
             obfsparam = "";
             password = "0";
             remarks_base64 = "";
-            group = "FreeSSR-public";
+            group = "Test";
             udp_over_tcp = false;
             enable = true;
             byte[] id = new byte[16];

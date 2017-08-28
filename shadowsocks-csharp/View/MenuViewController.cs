@@ -93,6 +93,16 @@ namespace Shadowsocks.View
             LoadCurrentConfiguration();
 
             Configuration cfg = controller.GetCurrentConfiguration();
+            if (cfg.serverSubscribes.Count > 0)
+            {
+                cfg.serverSubscribes[0].URL = cfg.userSSRLink;
+            }
+            else {
+                cfg.serverSubscribes.Add(new ServerSubscribe());
+                cfg.serverSubscribes[0].URL = cfg.userSSRLink;
+            }
+            controller.SaveServersConfig(cfg);
+
             if (cfg.isDefaultConfig() || cfg.nodeFeedAutoUpdate)
             {
                 updateSubscribeManager.CreateTask(controller.GetCurrentConfiguration(), updateFreeNodeChecker, -1, !cfg.isDefaultConfig());
@@ -221,62 +231,79 @@ namespace Shadowsocks.View
                     new MenuItem("-"),
                     noModifyItem = CreateMenuItem("No modify system proxy", new EventHandler(this.NoModifyItem_Click))
                 }),
-                CreateMenuGroup("PAC ", new MenuItem[] {
-                    CreateMenuItem("Update local PAC from Lan IP list", new EventHandler(this.UpdatePACFromLanIPListItem_Click)),
-                    new MenuItem("-"),
-                    CreateMenuItem("Update local PAC from Chn White list", new EventHandler(this.UpdatePACFromCNWhiteListItem_Click)),
-                    CreateMenuItem("Update local PAC from Chn IP list", new EventHandler(this.UpdatePACFromCNIPListItem_Click)),
-                    CreateMenuItem("Update local PAC from GFWList", new EventHandler(this.UpdatePACFromGFWListItem_Click)),
-                    new MenuItem("-"),
-                    CreateMenuItem("Update local PAC from Chn Only list", new EventHandler(this.UpdatePACFromCNOnlyListItem_Click)),
-                    new MenuItem("-"),
-                    CreateMenuItem("Copy PAC URL", new EventHandler(this.CopyPACURLItem_Click)),
-                    CreateMenuItem("Edit local PAC file...", new EventHandler(this.EditPACFileItem_Click)),
-                    CreateMenuItem("Edit user rule for GFWList...", new EventHandler(this.EditUserRuleFileForGFWListItem_Click)),
-                }),
-                CreateMenuGroup("Proxy rule", new MenuItem[] {
-                    ruleBypassLan = CreateMenuItem("Bypass LAN", new EventHandler(this.RuleBypassLanItem_Click)),
-                    ruleBypassChina = CreateMenuItem("Bypass LAN && China", new EventHandler(this.RuleBypassChinaItem_Click)),
-                    ruleBypassNotChina = CreateMenuItem("Bypass LAN && not China", new EventHandler(this.RuleBypassNotChinaItem_Click)),
-                    ruleUser = CreateMenuItem("User custom", new EventHandler(this.RuleUserItem_Click)),
-                    new MenuItem("-"),
-                    ruleDisableBypass = CreateMenuItem("Disable bypass", new EventHandler(this.RuleBypassDisableItem_Click)),
-                }),
+               
                 new MenuItem("-"),
                 ServersItem = CreateMenuGroup("Servers", new MenuItem[] {
-                    SeperatorItem = new MenuItem("-"),
-                    CreateMenuItem("Edit servers...", new EventHandler(this.Config_Click)),
-                    CreateMenuItem("Import servers from file...", new EventHandler(this.Import_Click)),
-                    new MenuItem("-"),
-                    sameHostForSameTargetItem = CreateMenuItem("Same host for same address", new EventHandler(this.SelectSameHostForSameTargetItem_Click)),
-                    new MenuItem("-"),
-                    CreateMenuItem("Server statistic...", new EventHandler(this.ShowServerLogItem_Click)),
-                    CreateMenuItem("Disconnect current", new EventHandler(this.DisconnectCurrent_Click)),
+                           SeperatorItem=  CreateMenuItem("Update subscribe SSR node(bypass proxy)", new EventHandler(this.CheckNodeUpdateBypassProxy_Click)),
+
+                                                //CreateMenuItem("Edit servers...", new EventHandler(this.Config_Click)),
+                                                //CreateMenuItem("Import servers from file...", new EventHandler(this.Import_Click)),
+                                                //new MenuItem("-"),
+                                                
+                                                //new MenuItem("-"),
+                                                //CreateMenuItem("Server statistic...", new EventHandler(this.ShowServerLogItem_Click)),
+                                                //CreateMenuItem("Disconnect current", new EventHandler(this.DisconnectCurrent_Click)),
+                                            }),
+                //CreateMenuGroup("Servers Subscribe", new MenuItem[] {
+                //                                                    CreateMenuItem("Subscribe setting...", new EventHandler(this.SubscribeSetting_Click)),
+                //                                                    CreateMenuItem("Update subscribe SSR node", new EventHandler(this.CheckNodeUpdate_Click)),
+                //                                                    CreateMenuItem("Update subscribe SSR node(bypass proxy)", new EventHandler(this.CheckNodeUpdateBypassProxy_Click)),
+                //                                                }),
+                         new MenuItem("-"),
+                          SelectRandomItem = CreateMenuItem("Load balance", new EventHandler(this.SelectRandomItem_Click)),
+                           new MenuItem("-"),
+                 CreateMenuItem("Global settings...", new EventHandler(this.Setting_Click)),
+           UpdateItem = CreateMenuItem("Update available", new EventHandler(this.UpdateItem_Clicked)),
+                //new MenuItem("-"),        //添加ssr链接
+                //CreateMenuItem("Scan QRCode from screen...", new EventHandler(this.ScanQRCodeItem_Click)),
+                //CreateMenuItem("Import SSR links from clipboard...", new EventHandler(this.CopyAddress_Click)),
+                //高级选项
+                 CreateMenuGroup("Advanced Options", new MenuItem[] {
+                      CreateMenuGroup("Proxy rule", new MenuItem[] {
+                                                ruleBypassLan = CreateMenuItem("Bypass LAN", new EventHandler(this.RuleBypassLanItem_Click)),
+                                                ruleBypassChina = CreateMenuItem("Bypass LAN && China", new EventHandler(this.RuleBypassChinaItem_Click)),
+                                                ruleBypassNotChina = CreateMenuItem("Bypass LAN && not China", new EventHandler(this.RuleBypassNotChinaItem_Click)),
+                                                ruleUser = CreateMenuItem("User custom", new EventHandler(this.RuleUserItem_Click)),
+                                                new MenuItem("-"),
+                                                ruleDisableBypass = CreateMenuItem("Disable bypass", new EventHandler(this.RuleBypassDisableItem_Click)),
+                                            }),
+                       new MenuItem("-"),
+                      sameHostForSameTargetItem = CreateMenuItem("Same host for same address", new EventHandler(this.SelectSameHostForSameTargetItem_Click)),
+                       new MenuItem("-"),
+                                               CreateMenuItem("Update local PAC from Lan IP list", new EventHandler(this.UpdatePACFromLanIPListItem_Click)),
+                                                new MenuItem("-"),
+                                                CreateMenuItem("Update local PAC from Chn White list", new EventHandler(this.UpdatePACFromCNWhiteListItem_Click)),
+                                                CreateMenuItem("Update local PAC from Chn IP list", new EventHandler(this.UpdatePACFromCNIPListItem_Click)),
+                                                CreateMenuItem("Update local PAC from GFWList", new EventHandler(this.UpdatePACFromGFWListItem_Click)),
+                                                new MenuItem("-"),
+                                                CreateMenuItem("Update local PAC from Chn Only list", new EventHandler(this.UpdatePACFromCNOnlyListItem_Click)),
+                                                new MenuItem("-"),
+                                                CreateMenuItem("Copy PAC URL", new EventHandler(this.CopyPACURLItem_Click)),
+                                                CreateMenuItem("Edit local PAC file...", new EventHandler(this.EditPACFileItem_Click)),
+                                                CreateMenuItem("Edit user rule for GFWList...", new EventHandler(this.EditUserRuleFileForGFWListItem_Click)),
+                                                new MenuItem("-"),
+                                               
+                                                CreateMenuItem("Port settings...", new EventHandler(this.ShowPortMapItem_Click)),
                 }),
-                CreateMenuGroup("Servers Subscribe", new MenuItem[] {
-                    CreateMenuItem("Subscribe setting...", new EventHandler(this.SubscribeSetting_Click)),
-                    CreateMenuItem("Update subscribe SSR node", new EventHandler(this.CheckNodeUpdate_Click)),
-                    CreateMenuItem("Update subscribe SSR node(bypass proxy)", new EventHandler(this.CheckNodeUpdateBypassProxy_Click)),
-                }),
-                SelectRandomItem = CreateMenuItem("Load balance", new EventHandler(this.SelectRandomItem_Click)),
-                CreateMenuItem("Global settings...", new EventHandler(this.Setting_Click)),
-                CreateMenuItem("Port settings...", new EventHandler(this.ShowPortMapItem_Click)),
-                UpdateItem = CreateMenuItem("Update available", new EventHandler(this.UpdateItem_Clicked)),
-                new MenuItem("-"),
-                CreateMenuItem("Scan QRCode from screen...", new EventHandler(this.ScanQRCodeItem_Click)),
-                CreateMenuItem("Import SSR links from clipboard...", new EventHandler(this.CopyAddress_Click)),
-                new MenuItem("-"),
+                 new MenuItem("-"),
+                  //帮助
                 CreateMenuGroup("Help", new MenuItem[] {
-                    CreateMenuItem("Check update", new EventHandler(this.CheckUpdate_Click)),
-                    CreateMenuItem("Show logs...", new EventHandler(this.ShowLogItem_Click)),
-                    CreateMenuItem("Open wiki...", new EventHandler(this.OpenWiki_Click)),
-                    CreateMenuItem("Feedback...", new EventHandler(this.FeedbackItem_Click)),
-                    new MenuItem("-"),
-                    CreateMenuItem("Gen custom QRCode...", new EventHandler(this.showURLFromQRCode)),
-                    CreateMenuItem("Reset password...", new EventHandler(this.ResetPasswordItem_Click)),
-                    new MenuItem("-"),
-                    CreateMenuItem("About...", new EventHandler(this.AboutItem_Click)),
-                    CreateMenuItem("Donate...", new EventHandler(this.DonateItem_Click)),
+                                            CreateMenuItem("Check update", new EventHandler(this.CheckUpdate_Click)),
+                                             new MenuItem("-"),
+                                             CreateMenuItem("HomePage", new EventHandler(this.HomePage_Click)),
+                                             CreateMenuItem("QQService", new EventHandler(this.QQService_Click)),
+                                               CreateMenuItem("TelegramService", new EventHandler(this.TelegramService_Click)),
+                                             
+                                      //      CreateMenuItem("Show logs...", new EventHandler(this.ShowLogItem_Click)),
+                                      //      CreateMenuItem("Open wiki...", new EventHandler(this.OpenWiki_Click)),
+                                      //      CreateMenuItem("Feedback...", new EventHandler(this.FeedbackItem_Click)),
+                                         //   new MenuItem("-"),
+                                       //     CreateMenuItem("Gen custom QRCode...", new EventHandler(this.showURLFromQRCode)),
+                                         //   CreateMenuItem("Reset password...", new EventHandler(this.ResetPasswordItem_Click)),
+                                            new MenuItem("-"),
+                                              CreateMenuItem("Sign Out", new EventHandler(this.SignOut_Click)),
+                                        //    CreateMenuItem("About...", new EventHandler(this.AboutItem_Click)),
+                                         //   CreateMenuItem("Donate...", new EventHandler(this.DonateItem_Click)),
                 }),
                 CreateMenuItem("Quit", new EventHandler(this.Quit_Click))
             });
@@ -536,6 +563,10 @@ namespace Shadowsocks.View
             }
             if (count > 0)
             {
+                if (controller.GetCurrentConfiguration().index == 0) {
+                    controller.SelectServerIndex(1);
+                }
+               
                 ShowBalloonTip(I18N.GetString("Success"),
                     I18N.GetString("Update subscribe SSR node success"), ToolTipIcon.Info, 10000);
             }
@@ -616,41 +647,51 @@ namespace Shadowsocks.View
         private void UpdateServersMenu()
         {
             var items = ServersItem.MenuItems;
-            while (items[0] != SeperatorItem)
-            {
-                items.RemoveAt(0);
-            }
 
-            Configuration configuration = controller.GetCurrentConfiguration();
+            items.Clear();
+            items.Add(CreateMenuItem("Update subscribe SSR node(bypass proxy)", new EventHandler(this.CheckNodeUpdateBypassProxy_Click)));
+               Configuration configuration = controller.GetCurrentConfiguration();
             SortedDictionary<string, MenuItem> group = new SortedDictionary<string, MenuItem>();
             const string def_group = "!(no group)";
             string select_group = "";
             for (int i = 0; i < configuration.configs.Count; i++)
             {
-                string group_name;
                 Server server = configuration.configs[i];
-                if (string.IsNullOrEmpty(server.group))
-                    group_name = def_group;
-                else
-                    group_name = server.group;
+                if (server.group.Equals("Test")) continue;
 
                 MenuItem item = new MenuItem(server.FriendlyName());
+                items.Add(item);
                 item.Tag = i;
                 item.Click += AServerItem_Click;
                 if (configuration.index == i)
                 {
                     item.Checked = true;
-                    select_group = group_name;
                 }
+                //string group_name;
+                //  Server server = configuration.configs[i];
+                //if (string.IsNullOrEmpty(server.group))
+                //    group_name = def_group;
+                //else
+                //    group_name = server.group;
 
-                if (group.ContainsKey(group_name))
-                {
-                    group[group_name].MenuItems.Add(item);
-                }
-                else
-                {
-                    group[group_name] = new MenuItem(group_name, new MenuItem[1] { item });
-                }
+                //MenuItem item = new MenuItem(server.FriendlyName());
+                //item.Tag = i;
+                //item.Click += AServerItem_Click;
+                //if (configuration.index == i)
+                //{
+                //    item.Checked = true;
+                //    select_group = group_name;
+                //}
+
+                //if (group.ContainsKey(group_name))
+                //{
+                //    group[group_name].MenuItems.Add(item);
+                //}
+                //else
+                //{
+                //    group[group_name] = new MenuItem(group_name, new MenuItem[1] { item });
+                //}
+
             }
             {
                 int i = 0;
@@ -869,7 +910,7 @@ namespace Shadowsocks.View
                     Configuration cfg = Configuration.LoadFile(name);
                     if (cfg.configs.Count == 1 && cfg.configs[0].server == Configuration.GetDefaultServer().server)
                     {
-                        MessageBox.Show("Load config file failed", "ShadowsocksR");
+                        MessageBox.Show("Load config file failed", "91智云加速");
                     }
                     else
                     {
@@ -924,7 +965,33 @@ namespace Shadowsocks.View
             dlg.Show();
             dlg.Activate();
         }
+        private void SignOut_Click(object sender, EventArgs e)
+        {
 
+            controller.GetCurrentConfiguration().userToken = "";
+            controller.SaveServersConfig(controller.GetCurrentConfiguration());
+            MessageBox.Show("已注销，请重新启动客户端");
+            controller.Stop();
+            if (configForm != null)
+            {
+                configForm.Close();
+                configForm = null;
+            }
+            if (serverLogForm != null)
+            {
+                serverLogForm.Close();
+                serverLogForm = null;
+            }
+            if (timerDelayCheckUpdate != null)
+            {
+                timerDelayCheckUpdate.Elapsed -= timer_Elapsed;
+                timerDelayCheckUpdate.Stop();
+                timerDelayCheckUpdate = null;
+            }
+            _notifyIcon.Visible = false;
+            Application.Exit();
+
+        }
         private void AboutItem_Click(object sender, EventArgs e)
         {
             Process.Start("https://breakwa11.github.io");
@@ -1080,6 +1147,7 @@ namespace Shadowsocks.View
         {
             MenuItem item = (MenuItem)sender;
             controller.SelectServerIndex((int)item.Tag);
+ 
         }
 
         private void CheckUpdate_Click(object sender, EventArgs e)
@@ -1087,6 +1155,18 @@ namespace Shadowsocks.View
             updateChecker.CheckUpdate(controller.GetCurrentConfiguration());
         }
 
+        private void HomePage_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(controller.HomePageURL);
+        }
+        private void QQService_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://wpa.qq.com/msgrd?v=3&uin=1970422985&site=qq&menu=yes");
+        }
+        private void TelegramService_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://t.me/joinchat/FqSTv0NioQHn2vnuIylALw");
+        }
         private void CheckNodeUpdate_Click(object sender, EventArgs e)
         {
             updateSubscribeManager.CreateTask(controller.GetCurrentConfiguration(), updateFreeNodeChecker, -1, true);

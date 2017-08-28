@@ -66,10 +66,10 @@ namespace Shadowsocks.Model
     [Serializable]
     public class ServerSubscribe
     {
-        private static string DEFAULT_FEED_URL = "https://raw.githubusercontent.com/breakwa11/breakwa11.github.io/master/free/freenodeplain.txt";
+     
         //private static string OLD_DEFAULT_FEED_URL = "https://raw.githubusercontent.com/breakwa11/breakwa11.github.io/master/free/freenode.txt";
 
-        public string URL = DEFAULT_FEED_URL;
+        public string URL ;
         public string Group;
     }
 
@@ -83,9 +83,10 @@ namespace Shadowsocks.Model
     {
         public string homePageUrl= ShadowsocksController.LocalhomeURL;
         public string userToken="";
+        public string userSSRLink;
 
         public List<Server> configs;    //节点列表
-        public int index;
+        public int index;       //选择的节点
         public bool random;
         public int sysProxyMode;    //默认链接方式
         public bool shareOverLan;
@@ -389,7 +390,7 @@ namespace Shadowsocks.Model
 
             randomAlgorithm = (int)ServerSelectStrategy.SelectAlgorithm.LowException;
             random = false;
-            sysProxyMode = (int)ProxyMode.Direct;
+            sysProxyMode = (int)ProxyMode.Pac;
             proxyRuleMode = (int)ProxyRuleMode.BypassLanAndChina;
 
             nodeFeedAutoUpdate = true;
@@ -406,6 +407,7 @@ namespace Shadowsocks.Model
 
         public void CopyFrom(Configuration config)
         {
+            userSSRLink = config.userSSRLink;
             homePageUrl = config.homePageUrl;
             userToken = config.userToken;
             configs = config.configs;

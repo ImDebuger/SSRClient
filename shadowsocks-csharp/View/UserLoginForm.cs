@@ -28,17 +28,17 @@ namespace Shadowsocks.View
             public string ssrlink;
         }
 
-        private UserLoginForm userLoginForm;
         private ShadowsocksController controller;
         private Configuration _modifiedConfiguration;
-        private UpdateFreeNode updateFreeNodeChecker;
-        private UpdateSubscribeManager updateSubscribeManager;
+
 
         public UserLoginForm(ShadowsocksController m_Controller)
         {
             controller = m_Controller;
             _modifiedConfiguration = controller.GetConfiguration();
             this.FormClosed += userLoginForm_FormClosed;
+
+           // _modifiedConfiguration.configs.Clear();
 
             InitializeComponent();
         }
@@ -88,48 +88,35 @@ namespace Shadowsocks.View
             d.TryGetValue("ret", out tempObject);
             if (tempObject.ToString().Equals("1"))
             {
-                //记录登录口令
+                //记录Token
                 d.TryGetValue("data", out tempObject);
                 data loginData = SimpleJson.SimpleJson.DeserializeObject<data>(tempObject.ToString());
 
-                _modifiedConfiguration.userToken = loginData.token;
-
-                //设置收到的SSR订阅链接
-                string ssrLink = loginData.ssrlink;
-                
-                ServerSubscribe newServerSub = new ServerSubscribe();
-                newServerSub.URL = Program._controller.HomePageURL + "/link/" + ssrLink + "?mu=0";
-                newServerSub.Group = "91智云加速";
-                //存储
-
-                if (_modifiedConfiguration.serverSubscribes.Count >= 1)
+                //是否自动登录
+                if (ck_remeberme.Checked)
                 {
-                    _modifiedConfiguration.serverSubscribes[0] = newServerSub;
+                    _modifiedConfiguration.userToken = loginData.token;
                 }
-                else
-                {
-                    _modifiedConfiguration.serverSubscribes.Add(newServerSub);
+                else {
+                    _modifiedConfiguration.userToken = "";
                 }
+
+                //记录SSR链接
+                _modifiedConfiguration.userSSRLink = Program._controller.HomePageURL + "/link/" + loginData.ssrlink + "?mu=0";
+               
 
                 controller.SaveServersConfig(_modifiedConfiguration);
-                //生成小图标
+     
                 Program._viewController = new MenuViewController(controller);
-                //关闭登录窗口
+               
                 this.Close();
-            }//登录失败
+            }
+            //登录失败
             else {
                 d.TryGetValue("msg", out tempObject);
                 MessageBox.Show(tempObject.ToString());
 
             }
-
-
-
-            //更新订阅链接
-            //  updateFreeNodeChecker = new UpdateFreeNode();
-            //updateFreeNodeChecker.NewFreeNodeFound +=updateFreeNodeChecker_NewFreeNodeFound;
-            //updateSubscribeManager = new UpdateSubscribeManager();
-            //updateSubscribeManager.CreateTask(controller.GetCurrentConfiguration(), updateFreeNodeChecker, -1, false);
 
         }
         /// <summary>
@@ -171,235 +158,16 @@ namespace Shadowsocks.View
             return retString;
         }
 
-        /// <summary>
-        /// 更新节点列表,回调
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void updateFreeNodeChecker_NewFreeNodeFound(object sender, EventArgs e)
-        {
-            int count = 0;
-            if (!String.IsNullOrEmpty(updateFreeNodeChecker.FreeNodeResult))
-            {
-                List<string> urls = new List<string>();
-                updateFreeNodeChecker.FreeNodeResult = updateFreeNodeChecker.FreeNodeResult.TrimEnd('\r', '\n', ' ');
-                Configuration config = controller.GetCurrentConfiguration();
-                Server selected_server = null;
-                if (config.index >= 0 && config.index < config.configs.Count)
-                {
-                    selected_server = config.configs[config.index];
-                }
-                try
-                {
-                    updateFreeNodeChecker.FreeNodeResult = Util.Base64.DecodeBase64(updateFreeNodeChecker.FreeNodeResult);
-                }
-                catch
-                {
-                    updateFreeNodeChecker.FreeNodeResult = "";
-                }
-                int max_node_num = 0;
 
-                Match match_maxnum = Regex.Match(updateFreeNodeChecker.FreeNodeResult, "^MAX=([0-9]+)");
-                if (match_maxnum.Success)
-                {
-                    try
-                    {
-                        max_node_num = Convert.ToInt32(match_maxnum.Groups[1].Value, 10);
-                    }
-                    catch
-                    {
-
-                    }
-                }
-               MenuViewController. URL_Split(updateFreeNodeChecker.FreeNodeResult, ref urls);
-                for (int i = urls.Count - 1; i >= 0; --i)
-                {
-                    if (!urls[i].StartsWith("ssr"))
-                        urls.RemoveAt(i);
-                }
-                if (urls.Count > 0)
-                {
-                    bool keep_selected_server = false; // set 'false' if import all nodes
-                    if (max_node_num <= 0 || max_node_num >= urls.Count)
-                    {
-                        urls.Reverse();
-                    }
-                    else
-                    {
-                        Random r = new Random();
-                        Util.Utils.Shuffle(urls, r);
-                        urls.RemoveRange(max_node_num, urls.Count - max_node_num);
-                        if (!config.isDefaultConfig())
-                            keep_selected_server = true;
-                    }
-                    string lastGroup = null;
-                    string curGroup = null;
-                    foreach (string url in urls)
-                    {
-                        try // try get group name
-                        {
-                            Server server = new Server(url, null);
-                            if (!String.IsNullOrEmpty(server.group))
-                            {
-                                curGroup = server.group;
-                                break;
-                            }
-                        }
-                        catch
-                        { }
-                    }
-                    string subscribeURL = updateSubscribeManager.URL;
-                    if (String.IsNullOrEmpty(curGroup))
-                    {
-                        curGroup = subscribeURL;
-                    }
-                    for (int i = 0; i < config.serverSubscribes.Count; ++i)
-                    {
-                        if (subscribeURL == config.serverSubscribes[i].URL)
-                        {
-                            lastGroup = config.serverSubscribes[i].Group;
-                            config.serverSubscribes[i].Group = curGroup;
-                            break;
-                        }
-                    }
-                    if (lastGroup == null)
-                    {
-                        lastGroup = curGroup;
-                    }
-
-                    if (keep_selected_server && selected_server.group == curGroup)
-                    {
-                        bool match = false;
-                        for (int i = 0; i < urls.Count; ++i)
-                        {
-                            try
-                            {
-                                Server server = new Server(urls[i], null);
-                                if (selected_server.isMatchServer(server))
-                                {
-                                    match = true;
-                                    break;
-                                }
-                            }
-                            catch
-                            { }
-                        }
-                        if (!match)
-                        {
-                            urls.RemoveAt(0);
-                            urls.Add(selected_server.GetSSRLinkForServer());
-                        }
-                    }
-
-                    // import all, find difference
-                    {
-                        Dictionary<string, Server> old_servers = new Dictionary<string, Server>();
-                        if (!String.IsNullOrEmpty(lastGroup))
-                        {
-                            for (int i = config.configs.Count - 1; i >= 0; --i)
-                            {
-                                if (lastGroup == config.configs[i].group)
-                                {
-                                    old_servers[config.configs[i].id] = config.configs[i];
-                                }
-                            }
-                        }
-                        foreach (string url in urls)
-                        {
-                            try
-                            {
-                                Server server = new Server(url, curGroup);
-                                bool match = false;
-                                foreach (KeyValuePair<string, Server> pair in old_servers)
-                                {
-                                    if (server.isMatchServer(pair.Value))
-                                    {
-                                        match = true;
-                                        old_servers.Remove(pair.Key);
-                                        pair.Value.CopyServerInfo(server);
-                                        ++count;
-                                        break;
-                                    }
-                                }
-                                if (!match)
-                                {
-                                    config.configs.Add(server);
-                                    ++count;
-                                }
-                            }
-                            catch
-                            { }
-                        }
-                        foreach (KeyValuePair<string, Server> pair in old_servers)
-                        {
-                            for (int i = config.configs.Count - 1; i >= 0; --i)
-                            {
-                                if (config.configs[i].id == pair.Key)
-                                {
-                                    config.configs.RemoveAt(i);
-                                    break;
-                                }
-                            }
-                        }
-                        controller.SaveServersConfig(config);
-                    }
-                    config = controller.GetCurrentConfiguration();
-                    if (selected_server != null)
-                    {
-                        bool match = false;
-                        for (int i = config.configs.Count - 1; i >= 0; --i)
-                        {
-                            if (config.configs[i].id == selected_server.id)
-                            {
-                                config.index = i;
-                                match = true;
-                                break;
-                            }
-                            else if (config.configs[i].group == selected_server.group)
-                            {
-                                if (config.configs[i].isMatchServer(selected_server))
-                                {
-                                    config.index = i;
-                                    match = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if (!match)
-                        {
-                            config.index = config.configs.Count - 1;
-                        }
-                    }
-                    else
-                    {
-                        config.index = config.configs.Count - 1;
-                    }
-                    controller.SaveServersConfig(config);
-
-                }
-            }
-            if (count > 0)
-            {
-                Program._viewController.ShowBalloonTip(I18N.GetString("Success"),
-                    I18N.GetString("Update subscribe SSR node success"), ToolTipIcon.Info, 10000);
-            }
-            else
-            {
-            Program._viewController. ShowBalloonTip(I18N.GetString("Error"),
-                    I18N.GetString("Update subscribe SSR node failure"), ToolTipIcon.Info, 10000);
-            }
-            if (updateSubscribeManager.Next())
-            {
-
-            }
-           
-        }
     
         //关闭登录界面
         void userLoginForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            userLoginForm = null;
             Util.Utils.ReleaseMemory();
+            if (Program._viewController==null) {
+                controller.Stop();
+                Application.Exit();
+            }
         }
         private void freelogin_Click(object sender, EventArgs e)
         {
@@ -410,5 +178,12 @@ namespace Shadowsocks.View
         {
             System.Diagnostics.Process.Start(Program._controller.HomePageURL);
         }
+
+        private void bt_forget_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Program._controller.HomePageURL+ "/password/reset");
+        }
+
+
     }
 }

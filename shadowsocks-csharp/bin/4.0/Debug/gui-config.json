@@ -1,10 +1,11 @@
 {
 	"homePageUrl" : "https://ss.91zhiyun.cn",
-	"userToken" : "JXm96QhiBKY7bwOaOOMTi0zx3uagYNkJaZytcF6hgAmZSwV8QltE4GWN6c0bN1At",
+	"userToken" : "PiotP5YBsLufu9t1CrqfvF0ik2drJyuMSVFBh354pm29obJvSpQhdAqwzsIKp6LC",
+	"userSSRLink" : "https://ss.91zhiyun.cn/link/JfcK3cSHxue95rTc?mu=0",
 	"configs" : [
 		{
 			"remarks" : "",
-			"id" : "420A946D285C87DFCCC8896B14259953",
+			"id" : "DFA081C8B005F0B4DE772F2082A67DA2",
 			"server" : "server host",
 			"server_port" : 8388,
 			"server_udp_port" : 0,
@@ -15,13 +16,13 @@
 			"obfs" : "plain",
 			"obfsparam" : "",
 			"remarks_base64" : "",
-			"group" : "FreeSSR-public",
+			"group" : "Test",
 			"enable" : true,
 			"udp_over_tcp" : false
 		},
 		{
 			"remarks" : "VIP-日本高速线路",
-			"id" : "5531A8623D8DB60774D76AAEB53BEE5E",
+			"id" : "F742A7894E221155ADE006EEFB235D05",
 			"server" : "jp1.91zhiyun.cn",
 			"server_port" : 48278,
 			"server_udp_port" : 0,
@@ -38,7 +39,7 @@
 		},
 		{
 			"remarks" : "VIP-美国洛杉矶",
-			"id" : "85AC9D275011A6AC3DE535D90C313EF4",
+			"id" : "40B648C3E65D70AA3C9DF8592C3429B2",
 			"server" : "us1.91zhiyun.cn",
 			"server_port" : 48278,
 			"server_udp_port" : 0,
@@ -54,12 +55,12 @@
 			"udp_over_tcp" : false
 		}
 	],
-	"index" : 0,
+	"index" : 1,
 	"random" : false,
-	"sysProxyMode" : 1,
+	"sysProxyMode" : 2,
 	"shareOverLan" : false,
 	"localPort" : 1080,
-	"localAuthPassword" : "oVq5v7FBJn5HB-xuHNFz",
+	"localAuthPassword" : "B4q8Ei_RJ9buPQ9Dh_z4",
 	"dnsServer" : "",
 	"reconnectTimes" : 2,
 	"randomAlgorithm" : 3,

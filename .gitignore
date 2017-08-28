@@ -1,6 +1,7 @@
 Backup/
 obj/
 pub/
+Debug/*
 7zip*/
 temp/
 TestResults

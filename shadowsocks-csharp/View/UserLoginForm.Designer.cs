@@ -98,7 +98,7 @@
             this.userEmailInput.MouseState = CCWin.SkinClass.ControlState.Normal;
             this.userEmailInput.Name = "userEmailInput";
             this.userEmailInput.NormlBack = null;
-            this.userEmailInput.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.userEmailInput.Padding = new System.Windows.Forms.Padding(5);
             this.userEmailInput.Size = new System.Drawing.Size(278, 46);
             // 
             // userEmailInput.BaseText
@@ -110,8 +110,7 @@
             this.userEmailInput.SkinTxt.Location = new System.Drawing.Point(55, 14);
             this.userEmailInput.SkinTxt.Name = "BaseText";
             this.userEmailInput.SkinTxt.Size = new System.Drawing.Size(211, 22);
-            this.userEmailInput.SkinTxt.TabIndex = 0;
-            this.userEmailInput.SkinTxt.TabStop = false;
+            this.userEmailInput.SkinTxt.TabIndex = 1;
             this.userEmailInput.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             this.userEmailInput.SkinTxt.WaterText = "请输入用户名";
             this.userEmailInput.SkinTxt.WordWrap = false;
@@ -152,7 +151,7 @@
             this.userKeyInput.MouseState = CCWin.SkinClass.ControlState.Normal;
             this.userKeyInput.Name = "userKeyInput";
             this.userKeyInput.NormlBack = null;
-            this.userKeyInput.Padding = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.userKeyInput.Padding = new System.Windows.Forms.Padding(5);
             this.userKeyInput.Size = new System.Drawing.Size(278, 46);
             // 
             // userKeyInput.BaseText
@@ -164,8 +163,7 @@
             this.userKeyInput.SkinTxt.Location = new System.Drawing.Point(55, 14);
             this.userKeyInput.SkinTxt.Name = "BaseText";
             this.userKeyInput.SkinTxt.Size = new System.Drawing.Size(212, 22);
-            this.userKeyInput.SkinTxt.TabIndex = 7;
-            this.userKeyInput.SkinTxt.TabStop = false;
+            this.userKeyInput.SkinTxt.TabIndex = 2;
             this.userKeyInput.SkinTxt.UseSystemPasswordChar = true;
             this.userKeyInput.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             this.userKeyInput.SkinTxt.WaterText = "请输入密码";
@@ -175,6 +173,8 @@
             // 
             this.ck_remeberme.AutoSize = true;
             this.ck_remeberme.BackColor = System.Drawing.Color.Transparent;
+            this.ck_remeberme.Checked = true;
+            this.ck_remeberme.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ck_remeberme.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.ck_remeberme.DownBack = null;
             this.ck_remeberme.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -187,7 +187,8 @@
             this.ck_remeberme.SelectedNormlBack = null;
             this.ck_remeberme.Size = new System.Drawing.Size(75, 21);
             this.ck_remeberme.TabIndex = 2;
-            this.ck_remeberme.Text = "记住密码";
+            this.ck_remeberme.TabStop = false;
+            this.ck_remeberme.Text = "自动登录";
             this.ck_remeberme.UseVisualStyleBackColor = false;
             // 
             // bt_forget
@@ -205,6 +206,7 @@
             this.bt_forget.TabStop = false;
             this.bt_forget.Text = "忘记密码";
             this.bt_forget.UseVisualStyleBackColor = false;
+            this.bt_forget.Click += new System.EventHandler(this.bt_forget_Click);
             // 
             // skinPictureBox4
             // 
@@ -268,12 +270,14 @@
             this.freelogin.Name = "freelogin";
             this.freelogin.Size = new System.Drawing.Size(122, 35);
             this.freelogin.TabIndex = 4;
+            this.freelogin.TabStop = false;
             this.freelogin.Text = "免费试用";
             this.freelogin.UseVisualStyleBackColor = true;
             this.freelogin.Click += new System.EventHandler(this.freelogin_Click);
             // 
             // UserLoginForm
             // 
+            this.AcceptButton = this.bu_login;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(151)))), ((int)(((byte)(31)))));
