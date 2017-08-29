@@ -111,6 +111,10 @@ namespace Shadowsocks.View
             timerDelayCheckUpdate = new System.Timers.Timer(1000.0 * 10);
             timerDelayCheckUpdate.Elapsed += timer_Elapsed;
             timerDelayCheckUpdate.Start();
+
+            //提示登录成功
+            ShowBalloonTip("自动登录成功", "91智云加速|岂止于快", ToolTipIcon.Info, 1000);
+
         }
 
         private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

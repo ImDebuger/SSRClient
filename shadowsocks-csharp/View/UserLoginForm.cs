@@ -172,7 +172,7 @@ namespace Shadowsocks.View
                     }
 
                 };
-                http.DownloadStringAsync(new Uri("https://raw.githubusercontent.com/ImDebuger/WebInfo/master/index.txt"));
+                http.DownloadStringAsync(new Uri("http://ss.debuger.me/ssInfo.txt"));
             }
             catch (Exception e)
             {

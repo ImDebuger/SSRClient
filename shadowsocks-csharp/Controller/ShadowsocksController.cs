@@ -582,7 +582,15 @@ namespace Shadowsocks.Controller
                 d.TryGetValue("data", out tempObject);
                 LoginToken tokenData = SimpleJson.SimpleJson.DeserializeObject<LoginToken>(tempObject.ToString());
                 //时间是否过期
-                return ShadowsocksController.ConvertStringToDateTime(tokenData.expireTime).CompareTo(DateTime.Now) > 0;
+                if (ShadowsocksController.ConvertStringToDateTime(tokenData.expireTime).CompareTo(DateTime.Now) > 0)
+                {
+
+                   
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
             else {
                 return false;

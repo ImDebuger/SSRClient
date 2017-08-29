@@ -1,11 +1,11 @@
 {
-	"homePageUrl" : "https://ss.91zhiyun.cn",
-	"userToken" : "VyHsectPElJhhMGiK3strA8kdnZEnmZc8Eir7vmVgIDc0KXtkkJDhsO4M1uwi25y",
-	"userSSRLink" : "https://ss.91zhiyun.cn/link/JfcK3cSHxue95rTc?mu=0",
+	"homePageUrl" : "https://ss.91zhiyun.c",
+	"userToken" : "",
+	"userSSRLink" : null,
 	"configs" : [
 		{
 			"remarks" : "",
-			"id" : "3883417C3D4EE32AA42171AF3B002BA3",
+			"id" : "64680289B35540F535BCECCF9FD5C176",
 			"server" : "server host",
 			"server_port" : 8388,
 			"server_udp_port" : 0,
@@ -19,48 +19,14 @@
 			"group" : "Test",
 			"enable" : true,
 			"udp_over_tcp" : false
-		},
-		{
-			"remarks" : "VIP-日本高速线路",
-			"id" : "DA20F116D8438A87E6AB0598FDACA2C5",
-			"server" : "jp1.91zhiyun.cn",
-			"server_port" : 48278,
-			"server_udp_port" : 0,
-			"password" : "iySbDw",
-			"method" : "rc4-md5",
-			"protocol" : "auth_aes128_md5",
-			"protocolparam" : "91zhiyun",
-			"obfs" : "tls1.2_ticket_fastauth",
-			"obfsparam" : "91zhiyun",
-			"remarks_base64" : "VklQLeaXpeacrOmrmOmAn-e6v-i3rw",
-			"group" : "91智云加速",
-			"enable" : true,
-			"udp_over_tcp" : false
-		},
-		{
-			"remarks" : "VIP-美国洛杉矶",
-			"id" : "37E25FBEDE641FE6D6B9D0FD6B28F513",
-			"server" : "us1.91zhiyun.cn",
-			"server_port" : 48278,
-			"server_udp_port" : 0,
-			"password" : "iySbDw",
-			"method" : "rc4-md5",
-			"protocol" : "auth_aes128_md5",
-			"protocolparam" : "91zhiyun",
-			"obfs" : "tls1.2_ticket_fastauth",
-			"obfsparam" : "91zhiyun",
-			"remarks_base64" : "VklQLee-juWbvea0m-adieeftg",
-			"group" : "91智云加速",
-			"enable" : true,
-			"udp_over_tcp" : false
 		}
 	],
-	"index" : 1,
+	"index" : 0,
 	"random" : false,
 	"sysProxyMode" : 2,
 	"shareOverLan" : false,
 	"localPort" : 1080,
-	"localAuthPassword" : "iNpfPE7w-AAGLNpWfj6I",
+	"localAuthPassword" : null,
 	"dnsServer" : "",
 	"reconnectTimes" : 2,
 	"randomAlgorithm" : 3,
@@ -84,10 +50,7 @@
 	"isHideTips" : false,
 	"nodeFeedAutoUpdate" : true,
 	"serverSubscribes" : [
-		{
-			"URL" : "https://ss.91zhiyun.cn/link/JfcK3cSHxue95rTc?mu=0",
-			"Group" : "91智云加速"
-		}
+
 	],
 	"token" : {
 
