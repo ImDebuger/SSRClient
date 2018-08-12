@@ -81,9 +81,15 @@ namespace Shadowsocks.Model
     [Serializable]
     public class Configuration
     {
-        public string homePageUrl;
+        //官网地址
+        public static string G_HomePageUrl= "http://www.qzcloud.xyz";
+        //TG群组
+        public static string G_TelegramGroupUrl = "https://t.me/qzcloud";
+        //QQ群
+        public static string G_QQGroup = "http://wpa.qq.com/msgrd?v=3&uin=1970422985&site=qq&menu=yes";
+
+
         public string userToken="";
-        public string userSSRLink;
 
         public List<Server> configs;    //节点列表
         public int index;       //选择的节点
@@ -133,6 +139,8 @@ namespace Shadowsocks.Model
         private Dictionary<int, PortMapConfigCache> portMapCache = new Dictionary<int, PortMapConfigCache>();
 
         private static string CONFIG_FILE = "gui-config.json";
+
+  
 
         public static void SetPassword(string password)
         {
@@ -407,8 +415,6 @@ namespace Shadowsocks.Model
 
         public void CopyFrom(Configuration config)
         {
-            userSSRLink = config.userSSRLink;
-            homePageUrl = config.homePageUrl;
             userToken = config.userToken;
             configs = config.configs;
             index = config.index;

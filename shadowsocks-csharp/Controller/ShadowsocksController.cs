@@ -108,6 +108,10 @@ namespace Shadowsocks.Controller
             return Configuration.Load();
         }
 
+        /// <summary>
+        /// 获取配制文件
+        /// </summary>
+        /// <returns></returns>
         public Configuration GetCurrentConfiguration()
         {
             return _config;
@@ -564,7 +568,7 @@ namespace Shadowsocks.Controller
       
       
         public bool TestClientTokenStaus() {
-             string url =/* "https://ss.91zhiyun.cn" */ GetCurrentConfiguration().homePageUrl + "/client/login/{token}";
+             string url = Configuration.G_HomePageUrl + "/client/login/{token}";
             string data = "token=" + GetConfiguration().userToken;
 
             if (data.Equals("token=")) {

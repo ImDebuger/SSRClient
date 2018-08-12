@@ -97,10 +97,10 @@ namespace Shadowsocks.Properties {
         ///
         ///# Menu items
         ///
-        ///Mode=系统代理模式
+        ///Mode=加速模式
         ///No modify system proxy=保持当前状态不修改
         ///Disable system proxy=直连模式
-        ///PAC=PAC 模式
+        ///PAC=PAC 模式（推荐）
         ///Global=全局模式
         ///Proxy rule=代理规则
         ///Bypass LAN=绕过局域网
@@ -114,7 +114,7 @@ namespace Shadowsocks.Properties {
         ///Servers Subscribe=服务器订阅
         ///Subscribe setting...=SSR服务器订阅设置...
         ///Update subscribe SSR node=更新SSR服务器订阅
-        ///Update subscr [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///Update subs [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string cn {
             get {
@@ -148,6 +148,16 @@ namespace Shadowsocks.Properties {
         internal static System.Drawing.Bitmap logoText {
             get {
                 object obj = ResourceManager.GetObject("logoText", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap logoText1 {
+            get {
+                object obj = ResourceManager.GetObject("logoText1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -120,7 +120,7 @@ namespace Shadowsocks.Controller
             }
             else
             {
-                _URL = _serverSubscribes[0].URL;
+              _URL = _serverSubscribes[0].URL;
                 _updater.CheckUpdate(_config, _URL, _use_proxy);
                 _serverSubscribes.RemoveAt(0);
                 return true;

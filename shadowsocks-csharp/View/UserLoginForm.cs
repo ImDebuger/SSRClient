@@ -37,7 +37,7 @@ namespace Shadowsocks.View
             controller = m_Controller;
             _modifiedConfiguration = controller.GetConfiguration();
             this.FormClosed += userLoginForm_FormClosed;
-            UpdateHomePageByGitHub();
+           // UpdateHomePageByGitHub();
            // _modifiedConfiguration.configs.Clear();
 
             InitializeComponent();
@@ -48,20 +48,20 @@ namespace Shadowsocks.View
             this.Cursor = Cursors.WaitCursor;//等待
             bu_login.Enabled = false;
 
-            if (userEmailInput.SkinTxt.Text.Length == 0 || userKeyInput.SkinTxt.Text.Length == 0)
+            if (userMailInput.TextLength == 0 || userKeyCodeInput.TextLength == 0)
             {
-                MessageBox.Show("请输入正确的91智云加速登录信息！");
+                MessageBox.Show("请输入轻纸云登录信息！");
                 bu_login.Enabled = true;
                 this.Cursor = Cursors.Default;//正常状态
                 return;
             }
 
-            SentPostToLogin(userEmailInput.SkinTxt.Text, userKeyInput.SkinTxt.Text);
+            SentPostToLogin(userMailInput.Text, userKeyCodeInput.Text);
         }
         private void SentPostToLogin(string useremail,string userkey) {
 
 
-            string url = controller.GetConfiguration().homePageUrl + "/client/login";
+            string url = Configuration.G_HomePageUrl + "/client/login";
             string data = "email=" + useremail + "&" +
                                 "passwd=" + userkey + "&+" +
                                 "remember_me=" + "1";
@@ -99,9 +99,17 @@ namespace Shadowsocks.View
                     _modifiedConfiguration.userToken = "";
                 }
 
-                //记录SSR链接
-                _modifiedConfiguration.userSSRLink = controller.GetConfiguration().homePageUrl + "/link/" + loginData.ssrlink + "?mu=0";
-               
+                //保存订阅连接
+                ServerSubscribe mOnePoint = new ServerSubscribe();
+                mOnePoint.Group = "轻纸云 - 单端口";
+                mOnePoint.URL = Configuration.G_HomePageUrl + "/link/" + loginData.ssrlink + "?mu=1";
+
+                ServerSubscribe mNormalPoint = new ServerSubscribe();
+                mNormalPoint.Group = "轻纸云";
+                mNormalPoint.URL = Configuration.G_HomePageUrl + "/link/" + loginData.ssrlink + "?mu=0";
+
+                _modifiedConfiguration.serverSubscribes.Add(mOnePoint);
+                _modifiedConfiguration.serverSubscribes.Add(mNormalPoint);
 
                 controller.SaveServersConfig(_modifiedConfiguration);
      
@@ -153,31 +161,33 @@ namespace Shadowsocks.View
         /// </summary>
         public void UpdateHomePageByGitHub()
         {
-            try
-            {
-                WebClient http = new WebClient();
-                http.Proxy = null;
-                http.DownloadStringCompleted += delegate (object sender, DownloadStringCompletedEventArgs e)
-                {
-                    string homePageURL = e.Result;
-                    homePageURL = homePageURL.Substring(0, homePageURL.Length - 1);
+            //_modifiedConfiguration.HomePageUrl = "http://www.qzcloud.xyz";
 
-                    //如果网址更新
-                    
-                    if (_modifiedConfiguration.homePageUrl != homePageURL)
-                    {
+            //try
+            //{
+            //    WebClient http = new WebClient();
+            //    http.Proxy = null;
+            //    http.DownloadStringCompleted += delegate (object sender, DownloadStringCompletedEventArgs e)
+            //    {
+            //        string homePageURL = e.Result;
+            //        homePageURL = homePageURL.Substring(0, homePageURL.Length - 1);
 
-                        _modifiedConfiguration.homePageUrl = homePageURL;
-                        controller.SaveServersConfig(_modifiedConfiguration);
-                    }
+            //        //如果网址更新
 
-                };
-                http.DownloadStringAsync(new Uri("http://ss.debuger.me/ssInfo.txt"));
-            }
-            catch (Exception e)
-            {
-                Logging.LogUsefulException(e);
-            }
+            //        if (_modifiedConfiguration.homePageUrl != homePageURL)
+            //        {
+
+            //            _modifiedConfiguration.homePageUrl = homePageURL;
+            //            controller.SaveServersConfig(_modifiedConfiguration);
+            //        }
+
+            //    };
+            //    http.DownloadStringAsync(new Uri("http://ss.debuger.me/ssInfo.txt"));
+            //}
+            //catch (Exception e)
+            //{
+            //    Logging.LogUsefulException(e);
+            //}
         }
 
         //关闭登录界面
@@ -191,19 +201,52 @@ namespace Shadowsocks.View
         }
         private void freelogin_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(controller.GetConfiguration().homePageUrl);
+            System.Diagnostics.Process.Start(Configuration.G_HomePageUrl);
         }
 
         private void image_logo_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(controller.GetConfiguration().homePageUrl);
+            System.Diagnostics.Process.Start(Configuration.G_HomePageUrl);
         }
 
         private void bt_forget_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(controller.GetConfiguration().homePageUrl + "/password/reset");
+            System.Diagnostics.Process.Start(Configuration.G_HomePageUrl + "/password/reset");
         }
 
+        private void bg_wight_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
+
+        private void UserLoginForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void userKeyInput_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void userMailInput_SkinTxt_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void userMailInput_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void skinWaterTextBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void skinLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

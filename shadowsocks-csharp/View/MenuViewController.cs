@@ -46,6 +46,7 @@ namespace Shadowsocks.View
 
         private MenuItem SeperatorItem;
         private MenuItem ServersItem;
+        private MenuItem ServersItem_Normal;
         private MenuItem SelectRandomItem;
         private MenuItem sameHostForSameTargetItem;
         private MenuItem UpdateItem;
@@ -92,28 +93,20 @@ namespace Shadowsocks.View
 
             LoadCurrentConfiguration();
 
-            Configuration cfg = controller.GetCurrentConfiguration();
-            if (cfg.serverSubscribes.Count > 0)
-            {
-                cfg.serverSubscribes[0].URL = cfg.userSSRLink;
-            }
-            else {
-                cfg.serverSubscribes.Add(new ServerSubscribe());
-                cfg.serverSubscribes[0].URL = cfg.userSSRLink;
-            }
-            controller.SaveServersConfig(cfg);
 
-            if (cfg.isDefaultConfig() || cfg.nodeFeedAutoUpdate)
-            {
-                updateSubscribeManager.CreateTask(controller.GetCurrentConfiguration(), updateFreeNodeChecker, -1, !cfg.isDefaultConfig());
-            }
+
+            updateSubscribeManager.CreateTask(controller.GetCurrentConfiguration(), updateFreeNodeChecker, -1, false);
+            //if (cfg.isDefaultConfig() || cfg.nodeFeedAutoUpdate)
+            //{
+            //    updateSubscribeManager.CreateTask(controller.GetCurrentConfiguration(), updateFreeNodeChecker, -1, !cfg.isDefaultConfig());
+            //}
 
             timerDelayCheckUpdate = new System.Timers.Timer(1000.0 * 10);
             timerDelayCheckUpdate.Elapsed += timer_Elapsed;
             timerDelayCheckUpdate.Start();
 
             //提示登录成功
-            ShowBalloonTip("自动登录成功", "91智云加速|岂止于快", ToolTipIcon.Info, 1000);
+            ShowBalloonTip("自动登录成功", "轻纸云  |  岂止于快", ToolTipIcon.Info, 1000);
 
         }
 
@@ -228,6 +221,7 @@ namespace Shadowsocks.View
         private void LoadMenu()
         {
             this.contextMenu1 = new ContextMenu(new MenuItem[] {
+                    //加速模式
                 modeItem = CreateMenuGroup("Mode", new MenuItem[] {
                     enableItem = CreateMenuItem("Disable system proxy", new EventHandler(this.EnableItem_Click)),
                     PACModeItem = CreateMenuItem("PAC", new EventHandler(this.PACModeItem_Click)),
@@ -237,8 +231,20 @@ namespace Shadowsocks.View
                 }),
                
                 new MenuItem("-"),
+                //单端口服务器  
                 ServersItem = CreateMenuGroup("Servers", new MenuItem[] {
-                           SeperatorItem=  CreateMenuItem("Update subscribe SSR node(bypass proxy)", new EventHandler(this.CheckNodeUpdateBypassProxy_Click)),
+                          
+
+                                                //CreateMenuItem("Edit servers...", new EventHandler(this.Config_Click)),
+                                                //CreateMenuItem("Import servers from file...", new EventHandler(this.Import_Click)),
+                                                //new MenuItem("-"),
+                                                
+                                                //new MenuItem("-"),
+                                                //CreateMenuItem("Server statistic...", new EventHandler(this.ShowServerLogItem_Click)),
+                                                //CreateMenuItem("Disconnect current", new EventHandler(this.DisconnectCurrent_Click)),
+                                            }),
+                    ServersItem_Normal = CreateMenuGroup("ServersNormal", new MenuItem[] {
+                          
 
                                                 //CreateMenuItem("Edit servers...", new EventHandler(this.Config_Click)),
                                                 //CreateMenuItem("Import servers from file...", new EventHandler(this.Import_Click)),
@@ -254,8 +260,9 @@ namespace Shadowsocks.View
                 //                                                    CreateMenuItem("Update subscribe SSR node(bypass proxy)", new EventHandler(this.CheckNodeUpdateBypassProxy_Click)),
                 //                                                }),
 
-                        
+                         SeperatorItem=  CreateMenuItem("Update subscribe SSR node(bypass proxy)", new EventHandler(this.CheckNodeUpdateBypassProxy_Click)),
                            new MenuItem("-"),
+
                  CreateMenuItem("Global settings...", new EventHandler(this.Setting_Click)),
            UpdateItem = CreateMenuItem("Update available", new EventHandler(this.UpdateItem_Clicked)),
                 //new MenuItem("-"),        //添加ssr链接
@@ -649,73 +656,107 @@ namespace Shadowsocks.View
 
         private void UpdateServersMenu()
         {
-            var items = ServersItem.MenuItems;
-
-            items.Clear();
-            items.Add(CreateMenuItem("Update subscribe SSR node(bypass proxy)", new EventHandler(this.CheckNodeUpdateBypassProxy_Click)));
-               Configuration configuration = controller.GetCurrentConfiguration();
+            Configuration configuration = controller.GetCurrentConfiguration();
             SortedDictionary<string, MenuItem> group = new SortedDictionary<string, MenuItem>();
-            const string def_group = "!(no group)";
-            string select_group = "";
-            for (int i = 0; i < configuration.configs.Count; i++)
-            {
+
+            //普通单端口
+            var normalItems = ServersItem_Normal.MenuItems;
+            normalItems.Clear();
+
+            //单端口
+            var Oneitems = ServersItem.MenuItems;
+            Oneitems.Clear();
+
+            for (int i = 0; i < configuration.configs.Count; i++) {
                 Server server = configuration.configs[i];
                 if (server.group.Equals("Test")) continue;
-
                 MenuItem item = new MenuItem(server.FriendlyName());
-                items.Add(item);
                 item.Tag = i;
                 item.Click += AServerItem_Click;
                 if (configuration.index == i)
                 {
                     item.Checked = true;
                 }
-                //string group_name;
-                //  Server server = configuration.configs[i];
-                //if (string.IsNullOrEmpty(server.group))
-                //    group_name = def_group;
-                //else
-                //    group_name = server.group;
 
-                //MenuItem item = new MenuItem(server.FriendlyName());
-                //item.Tag = i;
-                //item.Click += AServerItem_Click;
-                //if (configuration.index == i)
-                //{
-                //    item.Checked = true;
-                //    select_group = group_name;
-                //}
-
-                //if (group.ContainsKey(group_name))
-                //{
-                //    group[group_name].MenuItems.Add(item);
-                //}
-                //else
-                //{
-                //    group[group_name] = new MenuItem(group_name, new MenuItem[1] { item });
-                //}
-
-            }
-            {
-                int i = 0;
-                foreach (KeyValuePair<string, MenuItem> pair in group)
-                {
-                    if (pair.Key == def_group)
-                    {
-                        pair.Value.Text = "(empty group)";
-                    }
-                    if (pair.Key == select_group)
-                    {
-                        pair.Value.Text = "● " + pair.Value.Text;
-                    }
-                    else
-                    {
-                        pair.Value.Text = "　" + pair.Value.Text;
-                    }
-                    items.Add(i, pair.Value);
-                    ++i;
+                if (server.group== "轻纸云 - 单端口") {
+                    Oneitems.Add(item);
+                } else {
+                    normalItems.Add(item);
                 }
             }
+                    
+            
+
+               
+         //   items.Add(CreateMenuItem("Update subscribe SSR node(bypass proxy)", new EventHandler(this.CheckNodeUpdateBypassProxy_Click)));
+
+            //const string def_group = "!(no group)";
+            //string select_group = "";
+            //for (int i = 0; i < configuration.configs.Count; i++)
+            //{
+            //    Server server = configuration.configs[i];
+            //    if (server.group.Equals("Test")) continue;
+
+            //    MenuItem item = new MenuItem(server.FriendlyName());
+            //    items.Add(item);
+            //    item.Tag = i;
+            //    item.Click += AServerItem_Click;
+            //    if (configuration.index == i)
+            //    {
+            //        item.Checked = true;
+            //    }
+
+            //    //string group_name;
+            //    //  Server server = configuration.configs[i];
+            //    //if (string.IsNullOrEmpty(server.group))
+            //    //    group_name = def_group;
+            //    //else
+            //    //    group_name = server.group;
+
+            //    //MenuItem item = new MenuItem(server.FriendlyName());
+            //    //item.Tag = i;
+            //    //item.Click += AServerItem_Click;
+            //    //if (configuration.index == i)
+            //    //{
+            //    //    item.Checked = true;
+            //    //    select_group = group_name;
+            //    //}
+
+            //    //if (group.ContainsKey(group_name))
+            //    //{
+            //    //    group[group_name].MenuItems.Add(item);
+            //    //}
+            //    //else
+            //    //{
+            //    //    group[group_name] = new MenuItem(group_name, new MenuItem[1] { item });
+            //    //}
+
+            
+           
+
+
+            //{
+            //    int i = 0;
+            //    foreach (KeyValuePair<string, MenuItem> pair in group)
+            //    {
+            //        if (pair.Key == def_group)
+            //        {
+            //            pair.Value.Text = "(empty group)";
+            //        }
+            //        if (pair.Key == select_group)
+            //        {
+            //            pair.Value.Text = "● " + pair.Value.Text;
+            //        }
+            //        else
+            //        {
+            //            pair.Value.Text = "　" + pair.Value.Text;
+            //        }
+            //        items.Add(i, pair.Value);
+            //        ++i;
+            //    }
+            //}
+
+            
         }
 
         private void ShowConfigForm(bool addNode)
@@ -913,7 +954,7 @@ namespace Shadowsocks.View
                     Configuration cfg = Configuration.LoadFile(name);
                     if (cfg.configs.Count == 1 && cfg.configs[0].server == Configuration.GetDefaultServer().server)
                     {
-                        MessageBox.Show("Load config file failed", "91智云加速");
+                        MessageBox.Show("Load config file failed", "轻纸云");
                     }
                     else
                     {
@@ -1160,15 +1201,15 @@ namespace Shadowsocks.View
 
         private void HomePage_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(controller.GetCurrentConfiguration().homePageUrl);
+            System.Diagnostics.Process.Start(Configuration.G_HomePageUrl);
         }
         private void QQService_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://wpa.qq.com/msgrd?v=3&uin=1970422985&site=qq&menu=yes");
+            System.Diagnostics.Process.Start(Configuration.G_QQGroup);
         }
         private void TelegramService_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://t.me/joinchat/FqSTv0NioQHn2vnuIylALw");
+            System.Diagnostics.Process.Start(Configuration.G_TelegramGroupUrl);
         }
         private void CheckNodeUpdate_Click(object sender, EventArgs e)
         {

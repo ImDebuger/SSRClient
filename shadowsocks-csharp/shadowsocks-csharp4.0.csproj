@@ -9,11 +9,11 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Shadowsocks</RootNamespace>
-    <AssemblyName>91SmartCloud</AssemblyName>
+    <AssemblyName>轻纸云</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>Shadowsocks.Program</StartupObject>
-    <ApplicationIcon>shadowsocks.ico</ApplicationIcon>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -62,7 +62,7 @@
   <ItemGroup>
     <Reference Include="CSkin, Version=12.8.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\CSkin 4.0\CSkin.dll</HintPath>
+      <HintPath>bin\CSkin 2.0\CSkin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
@@ -306,11 +306,11 @@
     <None Include="Resources\ss20.png" />
     <None Include="Resources\ss16.png" />
     <None Include="Resources\ss24.png" />
-    <None Include="Resources\ssw128.png" />
     <Content Include="Data\cn.txt" />
     <None Include="Data\privoxy_conf.txt" />
     <Content Include="Data\user-rule.txt" />
     <None Include="Resources\logoText.png" />
+    <None Include="Resources\ssw128.png" />
     <None Include="Resources\用户.png" />
     <None Include="Resources\密码.png" />
     <None Include="Resources\button.png" />
@@ -321,6 +321,7 @@
     <None Include="Resources\FsEFkr0Ixlh2X9gb9tsnLijXdkLP.png" />
     <None Include="Resources\2.png" />
     <None Include="Resources\bg.png" />
+    <Content Include="favicon.ico" />
     <Content Include="shadowsocks.ico" />
   </ItemGroup>
   <ItemGroup>

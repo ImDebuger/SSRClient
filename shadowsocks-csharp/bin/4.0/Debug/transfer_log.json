@@ -1,3 +1,10 @@
 {
-
+	"kr1-qz-l902k.qzcloud.xyz" : {
+		"totalUploadBytes" : 2429494,
+		"totalDownloadBytes" : 8871703
+	},
+	"hk1-qz-d93kl.qzcloud.xyz" : {
+		"totalUploadBytes" : 39245508,
+		"totalDownloadBytes" : 134572553
+	}
 }
