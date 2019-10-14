@@ -566,7 +566,10 @@ namespace Shadowsocks.Controller
         #region 变更
 
       
-      
+      /// <summary>
+      /// 检查Token是否有效
+      /// </summary>
+      /// <returns></returns>
         public bool TestClientTokenStaus() {
              string url = Configuration.G_HomePageUrl + "/client/login/{token}";
             string data = "token=" + GetConfiguration().userToken;

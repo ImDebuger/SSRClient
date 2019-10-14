@@ -82,7 +82,7 @@ namespace Shadowsocks.Model
     public class Configuration
     {
         //官网地址
-        public static string G_HomePageUrl= "https://www.qzcloud.xyz";
+        public static string G_HomePageUrl= "https://seessr.top";
         //TG群组
         public static string G_TelegramGroupUrl = "https://t.me/qzcloud";
         //QQ群

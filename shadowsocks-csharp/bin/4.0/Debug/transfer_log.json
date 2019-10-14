@@ -4,7 +4,15 @@
 		"totalDownloadBytes" : 8871703
 	},
 	"hk1-qz-d93kl.qzcloud.xyz" : {
-		"totalUploadBytes" : 39245508,
+		"totalUploadBytes" : 39324041,
 		"totalDownloadBytes" : 134572553
+	},
+	"sgp1-qz-emkis.qzcloud.xyz" : {
+		"totalUploadBytes" : 6279,
+		"totalDownloadBytes" : 5298
+	},
+	"ru3.qz-zl7234.qzcloud.xyz" : {
+		"totalUploadBytes" : 75589,
+		"totalDownloadBytes" : 301586
 	}
 }
